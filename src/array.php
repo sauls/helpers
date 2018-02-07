@@ -100,8 +100,129 @@ function array_set_value(array &$array, $path, $value)
         if (!\is_array($array[$key])) {
             $array[$key] = [$array[$key]];
         }
+
         $array = &$array[$key];
     }
 
     $array[\array_shift($keys)] = $value;
+}
+
+function array_remove_key(&$array, $key, $default = null)
+{
+    $keys = \is_array($key) ? $key : \explode('.', $key);
+
+    while(\count($keys) > 1) {
+        $key = \array_shift($keys);
+
+        if (\is_array($array[$key])) {
+            $array = &$array[$key];
+        }
+    }
+
+    $key = \array_shift($keys);
+
+    if (\is_array($array) && (isset($array[$key]) || \array_key_exists($key, $array))) {
+        $value = $array[$key];
+        unset($array[$key]);
+
+        return $value;
+    }
+
+    return $default;
+}
+
+function array_remove_value(&$array, $value): array
+{
+    $result = [];
+    if (\is_array($array)) {
+        foreach ($array as $key => $val) {
+            if ($val === $value) {
+                $result[$key] = $val;
+                unset($array[$key]);
+            }
+        }
+    }
+
+    return $result;
+}
+
+function array_key_exists(array $array, $key): bool
+{
+    $keys = $keys = \is_array($key) ? $key : \explode('.', $key);
+
+    while(\count($keys) > 1) {
+        $key = \array_shift($keys);
+
+        if (\is_array($array[$key])) {
+            $array = &$array[$key];
+        }
+    }
+
+    $key = \array_shift($keys);
+
+    return isset($array[$key]) || \array_key_exists($key, $array);
+
+}
+
+function array_deep_search(array $array, $searchValue)
+{
+    $result = [];
+    foreach ($array as $key => $value) {
+        if ($path = array_deep_search_value($key, $value, $searchValue)) {
+            $result[] = $path;
+        }
+    }
+
+    return $result;
+}
+
+function array_deep_search_value($key, $value, $searchValue, $path = [])
+{
+    if (\is_array($value) && $subPath = array_deep_search($value, $searchValue, $path)) {
+        return array_flatten(array_merge($path, [$key], $subPath));
+    }
+
+    if ($value === $searchValue) {
+        return [$key];
+    }
+
+    return [];
+}
+
+/**
+ * @throws \RuntimeException
+ */
+function array_flatten(array $array): array
+{
+    try {
+        $result = [];
+        foreach (\array_keys($array) as $key) {
+            $value = $array[$key];
+            if (\is_scalar($value)) {
+                $result[] = $value;
+            } elseif (\is_array($value)) {
+                $result = array_merge($result, array_flatten($value));
+            } elseif (\is_object($value)) {
+                $result[] = (string)$value;
+            }
+        }
+        return \array_values(\array_unique($result));
+    } catch (\Throwable $t) {
+        throw new \RuntimeException($t->getMessage());
+    }
+}
+
+function array_multiple_keys_exists(array $array, array $keys): bool
+{
+    if (empty($keys)) {
+        return false;
+    }
+
+    $result = true;
+
+    foreach ($keys as $key) {
+        $result &= array_key_exists($array, $key);
+    }
+
+    return $result;
 }

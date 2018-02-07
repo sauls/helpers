@@ -13,6 +13,8 @@
 namespace Sauls\Component\Helper;
 
 use PHPUnit\Framework\TestCase;
+use Sauls\Component\Helper\Stubs\DummyObject;
+use Sauls\Component\Helper\Stubs\StringObject;
 
 class ArrayTest extends TestCase
 {
@@ -60,9 +62,9 @@ class ArrayTest extends TestCase
      * @test
      * @dataProvider getVariousArraysForGetArrayValue()
      *
-     * @param mixed $expected
-     * @param mixed $array
-     * @param mixed $key
+     * @param mixed      $expected
+     * @param mixed      $array
+     * @param mixed      $key
      * @param mixed|null $default
      */
     public function should_get_array_value_by_given_values($expected, $array, $key, $default = null)
@@ -137,7 +139,7 @@ class ArrayTest extends TestCase
                 [
                     'g' => 'yes!',
                 ],
-                'g'
+                'g',
             ],
         ];
     }
@@ -166,7 +168,7 @@ class ArrayTest extends TestCase
             [
                 'Sandbox mode',
                 [
-                    'a' => 11
+                    'a' => 11,
                 ],
                 'b.v.g',
                 'Sandbox mode',
@@ -177,21 +179,21 @@ class ArrayTest extends TestCase
                     'World' => 'Hi!',
                     'deep' => [
                         'not so deep',
-                    ]
+                    ],
                 ],
                 ['deep', 'below', 'block'],
                 'World of blocks',
             ],
             [
-               ['a', 'b', 'c'],
-               [
-                   'numbers' => [1, 2, 4],
-                   'letters' => ['x', 'v', 'z'],
-                   'more' => 'f'
-               ],
-               'more.letters',
                 ['a', 'b', 'c'],
-            ]
+                [
+                    'numbers' => [1, 2, 4],
+                    'letters' => ['x', 'v', 'z'],
+                    'more' => 'f',
+                ],
+                'more.letters',
+                ['a', 'b', 'c'],
+            ],
         ];
     }
 
@@ -208,7 +210,7 @@ class ArrayTest extends TestCase
             'c' => 'g',
             'v' => [
                 'u' => [
-                    'd' => 'f'
+                    'd' => 'f',
                 ],
             ],
             12 => 53,
@@ -221,8 +223,8 @@ class ArrayTest extends TestCase
             11 => 'Yupi!',
             'v' => [
                 'u' => [
-                    't' => 23
-                ]
+                    't' => 23,
+                ],
             ],
             'c' => 111,
             12 => 49,
@@ -242,7 +244,493 @@ class ArrayTest extends TestCase
             ],
             12 => 53,
             11 => 'Yupi!',
-            13 => 49
+            13 => 49,
         ], array_merge($array1, $array2));
+    }
+
+    /**
+     * @test
+     * @dataProvider getArrayRemoveKeyData
+     *
+     * @param mixed      $expected
+     * @param mixed      $key
+     * @param null|mixed $default
+     */
+    public function should_remove_array_element_by_given_key(
+        $expected,
+        array $array,
+        $key,
+        $default = null,
+        array $expectedArray = []
+    ) {
+        $this->assertSame($expected, array_remove_key($array, $key, $default));
+
+        if (!empty($expectedArray)) {
+            $this->assertEquals($expectedArray, $array);
+        }
+    }
+
+    public function getArrayRemoveKeyData(): array
+    {
+        return [
+            [null, [], 'test'],
+            [5, [], 'age', 5],
+            [83, [11, 22, 83], 2],
+            [22, [11, 22, 83], 1, null, [0 => 11, 2 => 83]],
+            [
+                'yiw!',
+                [
+                    'a' => [
+                        'b' => 'yiw!',
+                    ],
+                ],
+                'a.b',
+                null,
+                [
+                    'a' => [],
+                ],
+            ],
+            [
+                'is it working?',
+                [
+                    'a' => 'Hello',
+                    'b' => [1, 2],
+                    'c' => [
+                        'g' => [
+                            'y' => 'function',
+                            'v' => 'is it working?',
+                            'x' => 'factor',
+                        ],
+                    ],
+                    'd' => [],
+                ],
+                'c.g.v',
+                null,
+                [
+                    'a' => 'Hello',
+                    'b' => [1, 2],
+                    'c' => [
+                        'g' => [
+                            'y' => 'function',
+                            'x' => 'factor',
+                        ],
+                    ],
+                    'd' => [],
+                ],
+            ],
+            [
+                'x',
+                [
+                    'a' => [
+                        'b' => [
+                            'c' => 'x',
+                        ],
+                    ],
+                ],
+                ['a', 'b', 'c'],
+                null,
+                [
+                    'a' => [
+                        'b' => [],
+                    ],
+                ],
+            ],
+            [
+                null,
+                [
+                    'c' => [
+                        'x' => [
+                            'v' => 'ttt',
+                            'b' => 11,
+                        ],
+                    ],
+                ],
+                'c.x.a',
+            ],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider getArrayRemoveValueData
+     *
+     * @param mixed $expected
+     * @param mixed $value
+     */
+    public function should_remove_array_element_by_given_value(
+        $expected,
+        array $array,
+        $value,
+        array $expectedArray = []
+    ) {
+        $this->assertSame($expected, array_remove_value($array, $value));
+
+        if (!empty($expectedArray)) {
+            $this->assertEquals($expectedArray, $array);
+        }
+    }
+
+    public function getArrayRemoveValueData(): array
+    {
+        return [
+            [[], [], 'value', []],
+            [
+                ['x' => 11],
+                [
+                    'y' => 25,
+                    'x' => 11,
+                ],
+                11,
+                [
+                    'y' => 25,
+                ],
+            ],
+            [
+                [
+                    'marry' => 'carson',
+                    'john' => 'carson',
+                ],
+                [
+                    'johan' => 'doe',
+                    'marry' => 'carson',
+                    'tim' => 'west',
+                    'andy' => 'gear',
+                    'john' => 'carson',
+                ],
+                'carson',
+                [
+                    'johan' => 'doe',
+                    'tim' => 'west',
+                    'andy' => 'gear',
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider getArrayKeyExistsData()
+     *
+     * @param mixed $expected
+     * @param mixed $key
+     */
+    public function should_check_if_given_key_exists_in_array($expected, $array, $key, bool $caseSensitive = true)
+    {
+        $this->assertSame($expected, array_key_exists($array, $key, $caseSensitive));
+    }
+
+    public function getArrayKeyExistsData(): array
+    {
+        return [
+            [false, [], 'x'],
+            [
+                true,
+                [
+                    'x' => 11,
+                    'y' => 12,
+                ],
+                'y'
+            ],
+            [
+                false,
+                [
+                    'x' => 11,
+                    'y' => 12,
+                ],
+                'Y',
+            ],
+            [
+                true,
+                [
+                    'x' => 11,
+                    'Y' => 12,
+                ],
+                'Y',
+                false
+            ],
+            [
+                true,
+                [
+                    'a' => [
+                        'b' => 'value'
+                    ],
+                    'c' => 44,
+                ],
+                'a.b'
+            ],
+            [
+                false,
+                [
+                    'a' => [
+                        'b' => 'value'
+                    ],
+                    'c' => 44,
+                ],
+                'a.B'
+            ],
+            [
+                true,
+                [
+                    'a' => [
+                        'B' => 'value'
+                    ],
+                    'c' => 44,
+                ],
+                'a.B',
+                false
+            ],
+        ];
+    }
+
+    /**
+     * @test
+     * @expectedException \TypeError
+     */
+    public function should_throw_error_when_not_array_passed_to_array_key_exists()
+    {
+        array_key_exists('I am a string.', 'value');
+    }
+
+    /**
+     * @test
+     * @dataProvider getArrayDeepSearchData
+     *
+     */
+    public function should_return_array_deep_search_array_with_path_arrays_to_value($expected, array $array, $value)
+    {
+        $this->assertSame($expected, array_deep_search($array, $value));
+    }
+
+    /**
+     * @return array
+     */
+    public function getArrayDeepSearchData(): array
+    {
+        return [
+            [[], [], ''],
+            [
+                [],
+                [
+                    'a' => 'b',
+                    'c' => 'd',
+                    'g' => [
+                        'v' => 'm',
+                    ]
+                ],
+                'o'
+            ],
+            [
+                [
+                    0 => [
+                        0 => 'c'
+                    ],
+                ],
+                [
+                    'a' => 'b',
+                    'c' => 'd',
+                    'g' => [
+                        'v' => 'm',
+                    ]
+                ],
+                'd'
+            ],
+            [
+                [
+                    0 => [
+                        0 => 'g',
+                        1 => 'v',
+                    ]
+                ],
+                [
+                    'a' => 'b',
+                    'c' => 'd',
+                    'g' => [
+                        'v' => 'm',
+                    ]
+                ],
+                'm'
+            ],
+            [
+                [
+                    0 => [
+                        0 => 'j',
+                        1 => 'f',
+                        2 => 'cd',
+                    ],
+                    1 => [
+                        0 => 'g',
+                        1 => 'v',
+                    ]
+                ],
+                [
+                    'a' => 'b',
+                    'j' => [
+                        'f' => [
+                            'cd' => 'm',
+                        ],
+                    ],
+                    'c' => 'd',
+                    'g' => [
+                        'v' => 'm',
+                    ]
+                ],
+                'm'
+            ],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider getArrayDeppSearchValueData
+     *
+     * @param mixed $key
+     * @param mixed $value
+     * @param mixed $searchValue
+     */
+    public function should_return_array_deep_search_value_path_array(array $expected, $key, $value, $searchValue)
+    {
+        $this->assertSame($expected, array_deep_search_value($key, $value, $searchValue));
+    }
+
+    public function getArrayDeppSearchValueData(): array
+    {
+        return [
+            [
+                [], 'test', [], 'test',
+            ],
+            [
+                [0 => 'test'],
+                'test',
+                [
+                    'x' => 1,
+                    'y' => 2,
+                    'test' => 11,
+                ],
+                11,
+            ],
+            [
+                [
+                    0 => 'test',
+                    1 => 'p',
+                    2 => 'a',
+                ],
+                'test',
+                [
+                    'y' => 'u',
+                    'test' => [
+                        'o' => 11,
+                        'p' => [
+                            'a' => 23
+                        ],
+                    ],
+                ],
+                23
+            ]
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider getArrayFlattenData
+     */
+    public function should_flatten_given_array($expected, $array)
+    {
+        $this->assertSame($expected, array_flatten($array));
+    }
+
+    public function getArrayFlattenData(): array
+    {
+        return [
+            [
+                [], [],
+            ],
+            [
+                [
+                    0 => 11,
+                    1 => 23,
+                ],
+                [
+                    'a' => 11,
+                    'b' => 23,
+                ],
+            ],
+            [
+                [
+                    0 => 11,
+                    1 => 28,
+                    2 => 13,
+                ],
+                [
+                    'a' => 11,
+                    'b' => [
+                        'c' => 28,
+                        'a' => 13,
+                    ],
+                ],
+            ],
+            [
+                [
+                    0 => 15,
+                    1 => 'hello',
+                    2 => 'world',
+                    3 => 'life',
+                    4 => 'string object',
+                    5 => 25,
+                    6 => 98,
+                ],
+                [
+                    'a' => 15,
+                    'b' => [
+                        'c' => 'hello',
+                        'g' => [
+                            'world', 'life'
+                        ],
+                        'h' => new StringObject(),
+                    ],
+                    'v' => 'life',
+                    'm' => [
+                        15, 25, 98
+                    ],
+                ],
+            ]
+        ];
+    }
+
+    /**
+     * @test
+     * @expectedException \RuntimeException
+     */
+    public function should_throw_exception_when_object_cannot_be_converted_to_string()
+    {
+        array_flatten([
+           'a' => 11,
+           'b' => new DummyObject(),
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function should_check_if_multiple_array_keys_exists()
+    {
+        $array = [
+            'k1' => 11,
+            'k2' => 11,
+            'k3' => 11,
+            'x' => [
+                'break' => [
+                    'deeper' => 'secret project',
+                ],
+            ],
+            'k4' => 11,
+            'k5' => 11,
+        ];
+
+        $this->assertFalse(array_multiple_keys_exists([], ['theKey']));
+        $this->assertFalse(array_multiple_keys_exists([], []));
+        $this->assertFalse(array_multiple_keys_exists($array, ['one']));
+        $this->assertTrue(array_multiple_keys_exists($array, ['k1']));
+        $this->assertTrue(array_multiple_keys_exists($array, ['k1', 'k2']));
+        $this->assertTrue(array_multiple_keys_exists($array, ['k1', 'x.break.deeper']));
     }
 }
