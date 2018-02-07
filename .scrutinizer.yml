@@ -9,8 +9,7 @@ build:
 filter:
     paths: [src/*]
     excluded_paths: [vendor/*, tests/*]
-before_commands:
-    - 'composer update --prefer-source'
+
 tools:
     external_code_coverage: true
     php_mess_detector: true
@@ -24,20 +23,3 @@ tools:
     php_cpd:
         enabled: true
         excluded_dirs: [vendor, tests]
-
-filter:
-    excluded_paths:
-        - tests/*
-
-tools:
-    php_code_coverage:
-        enabled: true
-    php_code_sniffer:
-        config:
-            standard: "PSR2"
-    external_code_coverage:
-        timeout: 600
-
-after_script:
-    - wget https://scrutinizer-ci.com/ocular.phar
-    - php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
