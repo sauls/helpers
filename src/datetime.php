@@ -12,9 +12,11 @@
 
 namespace Sauls\Component\Helper;
 
-\define('ELAPSED_TIME_LABEL_SINGLE', 'single');
-\define('ELAPSED_TIME_LABEL_PLURAL', 'plural');
-\define('DEFAULT_ELAPSED_TIME_LABELS', [
+use function define;
+
+define('ELAPSED_TIME_LABEL_SINGLE', 'single');
+define('ELAPSED_TIME_LABEL_PLURAL', 'plural');
+define('DEFAULT_ELAPSED_TIME_LABELS', [
     ELAPSED_TIME_LABEL_SINGLE => [
         '{year}' => 'yr',
         '{month}' => 'mo',
@@ -34,7 +36,7 @@ namespace Sauls\Component\Helper;
         '{seconds}' => 's',
     ],
 ]);
-\define('DEFAULT_ELAPSED_TIME_OFFSETS', [
+define('DEFAULT_ELAPSED_TIME_OFFSETS', [
     ['{year}', '{years}', 31557600],
     ['{month}', '{months}', 2592000],
     ['{week}', '{weeks}', 604800],
@@ -79,7 +81,7 @@ function elapsed_time($date, array $elapsedTimeLabels = []): array
         if ($diff >= $offset) {
             $left = floor($diff / $offset);
             $diff -= ($left * $offset);
-            $timeLeft[] = format_elapsed_time_string($left, $elapsedTimeLabels, [
+            $timeLeft[] = format_elapsed_time_string((int)$left, $elapsedTimeLabels, [
                 ELAPSED_TIME_LABEL_SINGLE => $timeSingle,
                 ELAPSED_TIME_LABEL_PLURAL => $timePlural,
             ]);
@@ -91,14 +93,19 @@ function elapsed_time($date, array $elapsedTimeLabels = []): array
 
 function format_elapsed_time_string(int $timeLeft, array $elapsedTimeLabels, array $timeStrings): string
 {
-    return sprintf('%s%s', $timeLeft, (1 === $timeLeft ? strtr(
-            array_get_value($timeStrings, ELAPSED_TIME_LABEL_SINGLE, ''),
-            array_get_value($elapsedTimeLabels, ELAPSED_TIME_LABEL_SINGLE)
-        ) : strtr(
-            array_get_value($timeStrings, ELAPSED_TIME_LABEL_PLURAL, ''),
-            array_get_value($elapsedTimeLabels, ELAPSED_TIME_LABEL_PLURAL)
+    return sprintf(
+        '%s%s', $timeLeft,
+        (1 === $timeLeft
+            ? strtr(
+                array_get_value($timeStrings, ELAPSED_TIME_LABEL_SINGLE, ''),
+                array_get_value($elapsedTimeLabels, ELAPSED_TIME_LABEL_SINGLE)
+            )
+            : strtr(
+                array_get_value($timeStrings, ELAPSED_TIME_LABEL_PLURAL, ''),
+                array_get_value($elapsedTimeLabels, ELAPSED_TIME_LABEL_PLURAL)
+            )
         )
-    ));
+    );
 }
 
 /**
