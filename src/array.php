@@ -36,11 +36,11 @@ function array_merge(... $arrays): array
 }
 
 /**
- * @param mixed $array
- * @param mixed $key
- * @param null  $default
+ * @param mixed      $array
+ * @param mixed      $key
+ * @param null|mixed $default
  *
- * @return mixed|null
+ * @return null|mixed
  */
 function array_get_value($array, $key, $default = null)
 {
@@ -60,7 +60,7 @@ function array_get_value($array, $key, $default = null)
         return $array[$key];
     }
 
-    if (($pos = strrpos($key, '.')) !== false) {
+    if ((bool)($pos = strrpos($key, '.')) !== false) {
         $array = array_get_value($array, substr($key, 0, $pos), $default);
         $key = substr($key, $pos + 1);
     }
@@ -111,7 +111,7 @@ function array_remove_key(&$array, $key, $default = null)
 {
     $keys = \is_array($key) ? $key : \explode('.', $key);
 
-    while(\count($keys) > 1) {
+    while (\count($keys) > 1) {
         $key = \array_shift($keys);
 
         if (\is_array($array[$key])) {
@@ -148,9 +148,9 @@ function array_remove_value(&$array, $value): array
 
 function array_key_exists(array $array, $key): bool
 {
-    $keys = $keys = \is_array($key) ? $key : \explode('.', $key);
+    $keys = \is_array($key) ? $key : \explode('.', $key);
 
-    while(\count($keys) > 1) {
+    while (\count($keys) > 1) {
         $key = \array_shift($keys);
 
         if (\is_array($array[$key])) {
@@ -206,6 +206,7 @@ function array_flatten(array $array): array
                 $result[] = (string)$value;
             }
         }
+
         return \array_values(\array_unique($result));
     } catch (\Throwable $t) {
         throw new \RuntimeException($t->getMessage());
