@@ -65,7 +65,7 @@ function array_merge_integer_keyed_value($key, $value, &$result): void
  */
 function array_get_value($array, $key, $default = null)
 {
-    if ($key instanceof \Closure) {
+    if (\is_callable($key)) {
         return $key($array, $default);
     }
 
@@ -77,7 +77,7 @@ function array_get_value($array, $key, $default = null)
         $key = $lastKey;
     }
 
-    if (\is_array($array) && (isset($array[$key]) || \array_key_exists($key, $array))) {
+    if (is_array_and_key_exists($array, $key)) {
         return $array[$key];
     }
 
@@ -91,10 +91,20 @@ function array_get_value($array, $key, $default = null)
     }
 
     if (\is_array($array)) {
-        return (isset($array[$key]) || \array_key_exists($key, $array)) ? $array[$key] : $default;
+        return isset_array_key_or_key_exists($array, $key) ? $array[$key] : $default;
     }
 
     return $default;
+}
+
+function isset_array_key_or_key_exists($array, $key): bool
+{
+    return (isset($array[$key]) || \array_key_exists($key, $array));
+}
+
+function is_array_and_key_exists($array, $key): bool
+{
+    return \is_array($array) && (isset($array[$key]) || \array_key_exists($key, $array));
 }
 
 /**
@@ -114,18 +124,23 @@ function array_set_value(array &$array, $path, $value)
     while (\count($keys) > 1) {
         $key = \array_shift($keys);
 
-        if (!isset($array[$key])) {
-            $array[$key] = [];
-        }
-
-        if (!\is_array($array[$key])) {
-            $array[$key] = [$array[$key]];
-        }
+        array_create_value($array, $key);
 
         $array = &$array[$key];
     }
 
     $array[\array_shift($keys)] = $value;
+}
+
+function array_create_value(array &$array, $key): void
+{
+    if (!isset($array[$key])) {
+        $array[$key] = [];
+    }
+
+    if (!\is_array($array[$key])) {
+        $array[$key] = [$array[$key]];
+    }
 }
 
 function array_remove_key(&$array, $key, $default = null)
