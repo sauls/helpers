@@ -40,7 +40,16 @@ function base64_url_encode(string $value): string
 
 function base64_url_decode(string $value): string
 {
-    return base64_decode(strtr($value, '-_', '+/'));
+    return base64_decode(\strtr($value, '-_', '+/'));
+}
+
+function strtr(string $string, array $parameters): string
+{
+    foreach ($parameters as $key => $value) {
+        $string = \str_replace($key, $value, $string);
+    }
+
+    return $string;
 }
 
 

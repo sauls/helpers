@@ -93,7 +93,7 @@ function elapsed_time($date, array $elapsedTimeLabels = []): array
 
 function format_elapsed_time_string(int $timeLeft, array $elapsedTimeLabels, array $timeStrings): string
 {
-    return sprintf(
+    return \sprintf(
         '%s%s', $timeLeft,
         (1 === $timeLeft
             ? strtr(
@@ -129,5 +129,5 @@ function countdown($dateFrom = 'now', $dateTo, string $outputFormat = '%s%02d:%0
         $hours += $dateDifference->days * 24;
     }
 
-    return sprintf($outputFormat, $dateFromHigherThanDateTo ? '-' : '', $hours, $minutes, $seconds);
+    return \sprintf($outputFormat, $dateFromHigherThanDateTo ? '-' : '', $hours, $minutes, $seconds);
 }

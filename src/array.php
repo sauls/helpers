@@ -178,7 +178,7 @@ function array_deep_search(array $array, $searchValue)
 
 function array_deep_search_value($key, $value, $searchValue, $path = [])
 {
-    if (\is_array($value) && $subPath = array_deep_search($value, $searchValue, $path)) {
+    if (\is_array($value) && $subPath = array_deep_search($value, $searchValue)) {
         return array_flatten(array_merge($path, [$key], $subPath));
     }
 

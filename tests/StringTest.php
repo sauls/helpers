@@ -84,4 +84,35 @@ class StringTest extends TestCase
         $this->assertSame('ačiū - thank you!', base64_url_decode('YcSNacWrIC0gdGhhbmsgeW91IQ=='));
         $this->assertSame('555-444-555', base64_url_decode('NTU1LTQ0NC01NTU='));
     }
+
+    /**
+     * @test
+     * @dataProvider getStrtrData
+     */
+    public function should_replace_string_parts_with_given_representations(string $expected, string $string, array $parameters)
+    {
+        $this->assertSame($expected, strtr($string, $parameters));
+    }
+
+    public function getStrtrData()
+    {
+        return [
+            [
+                'Hello world',
+                '{s1} s2',
+                [
+                    '{s1}' => 'Hello',
+                    's2' => 'world'
+                ]
+            ],
+            [
+                'This is test x and this y',
+                'This is test %param% and this :param',
+                [
+                    '%param%' => 'x',
+                    ':param' => 'y'
+                ]
+            ]
+        ];
+    }
 }

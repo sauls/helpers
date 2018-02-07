@@ -38,5 +38,5 @@ $ composer require sauls/helpers
 | **datetime** | `print_elapsed_time_short, print_elapsed_time_long, elapsed_time, format_elapsed_time_string, countdown` |
 | **filesystem** | `rrdir, create_directory_path` |
 | **object** | `configure_object, get_object_property_value, concat_object_method, set_object_property_value` |
-| **string** | `camelize, snakeify, multi_explode, base64_url_encode, base64_url_decode` |
+| **string** | `camelize, snakeify, multi_explode, base64_url_encode, base64_url_decode, strtr` |
 
