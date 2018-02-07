@@ -225,5 +225,5 @@ function array_multiple_keys_exists(array $array, array $keys): bool
         $result &= array_key_exists($array, $key);
     }
 
-    return $result;
+    return $result ? true : false;
 }
