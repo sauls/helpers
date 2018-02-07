@@ -45,8 +45,6 @@ function configure_object(object $object, array $properties, array $methodPrefix
 }
 
 /**
- * @param null|mixed $default
- *
  * @return null|mixed
  *
  * @throws PropertyNotAccessibleException
