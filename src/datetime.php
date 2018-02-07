@@ -46,6 +46,8 @@ define('DEFAULT_ELAPSED_TIME_OFFSETS', [
     ['{second}', '{seconds}', 1],
 ]);
 
+define('DAY_IN_HOURS', 24);
+
 /**
  * @param string|\DateTime $date
  */
@@ -125,9 +127,16 @@ function countdown($dateFrom = 'now', $dateTo, string $outputFormat = '%s%02d:%0
     $minutes = $dateDifference->i;
     $seconds = $dateDifference->s;
 
-    if ($dateDifference->days > 0) {
-        $hours += $dateDifference->days * 24;
-    }
+    $hours += countdown_calculate_days_in_hours($dateDifference->days);
 
     return \sprintf($outputFormat, $dateFromHigherThanDateTo ? '-' : '', $hours, $minutes, $seconds);
+}
+
+function countdown_calculate_days_in_hours(int $days): int
+{
+    if ($days > 0) {
+        return $days * DAY_IN_HOURS;
+    }
+
+    return 0;
 }

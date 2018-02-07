@@ -197,19 +197,29 @@ function array_flatten(array $array): array
     try {
         $result = [];
         foreach (\array_keys($array) as $key) {
-            $value = $array[$key];
-            if (\is_scalar($value)) {
-                $result[] = $value;
-            } elseif (\is_array($value)) {
-                $result = array_merge($result, array_flatten($value));
-            } elseif (\is_object($value)) {
-                $result[] = (string)$value;
-            }
+            array_flatten_assign_value_by_element_type($array[$key], $result);
         }
-
         return \array_values(\array_unique($result));
     } catch (\Throwable $t) {
         throw new \RuntimeException($t->getMessage());
+    }
+}
+
+/**
+ * @param mixed $value
+ */
+function array_flatten_assign_value_by_element_type($value, array &$result): void
+{
+    if (\is_scalar($value)) {
+        $result[] = $value;
+    }
+
+    if (\is_array($value)) {
+        $result = array_merge($result, array_flatten($value));
+    }
+
+    if (\is_object($value)) {
+        $result[] = (string)$value;
     }
 }
 
