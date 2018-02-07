@@ -4,14 +4,11 @@ checks:
         duplication: true
 build:
     nodes:
-        php:
-            environment:
-                php: '7.2.2'
-            analysis:
-                project_setup:
-                    override: true
-                tests:
-                    override: [php-scrutinizer-run]
+        analysis:
+            project_setup:
+                override: true
+            tests:
+                override: [php-scrutinizer-run]
 
 filter:
     paths: [src/*]
