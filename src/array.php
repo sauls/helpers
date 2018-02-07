@@ -17,22 +17,42 @@ function array_merge(... $arrays): array
     $result = \array_shift($arrays);
     while (!empty($arrays)) {
         $nextArray = \array_shift($arrays);
-        foreach ($nextArray as $key => $value) {
-            if (\is_int($key)) {
-                if (\array_key_exists($key, $result)) {
-                    $result[] = $value;
-                } else {
-                    $result[$key] = $value;
-                }
-            } elseif (\is_array($value) && isset($result[$key]) && \is_array($result[$key])) {
-                $result[$key] = array_merge($result[$key], $value);
-            } else {
-                $result[$key] = $value;
-            }
-        }
+        array_merge_with_next_array($nextArray, $result);
     }
 
     return $result;
+}
+
+function array_merge_with_next_array($nextArray, &$result): void
+{
+    foreach ($nextArray as $key => $value) {
+        array_merge_with_current_array_values($key, $value, $result);
+    }
+}
+
+function array_merge_with_current_array_values($key, $value, &$result): void
+{
+    if (\is_int($key)) {
+        array_merge_integer_keyed_value($key, $value, $result);
+    } elseif (can_merge_two_value_arrays($key, $value, $result)) {
+        $result[$key] = array_merge($result[$key], $value);
+    } else {
+        $result[$key] = $value;
+    }
+}
+
+function can_merge_two_value_arrays($key, $value, $result): bool
+{
+    return \is_array($value) && isset($result[$key]) && \is_array($result[$key]);
+}
+
+function array_merge_integer_keyed_value($key, $value, &$result): void
+{
+    if (\array_key_exists($key, $result)) {
+        $result[] = $value;
+    } else {
+        $result[$key] = $value;
+    }
 }
 
 /**
@@ -122,7 +142,7 @@ function array_remove_key(&$array, $key, $default = null)
 
     $key = \array_shift($keys);
 
-    if (\is_array($array) && (isset($array[$key]) || \array_key_exists($key, $array))) {
+    if (can_remove_array_key($array, $key)) {
         $value = $array[$key];
         unset($array[$key]);
 
@@ -130,6 +150,11 @@ function array_remove_key(&$array, $key, $default = null)
     }
 
     return $default;
+}
+
+function can_remove_array_key($array, $key): bool
+{
+    return \is_array($array) && (isset($array[$key]) || \array_key_exists($key, $array));
 }
 
 function array_key_exists(array $array, $key): bool

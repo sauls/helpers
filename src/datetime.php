@@ -64,33 +64,37 @@ function print_elapsed_time_long($date, array $elapsedTimeLabels = []): string
     return implode(' ', elapsed_time($date, $elapsedTimeLabels));
 }
 
-/**
- * @param string|\DateTime $date
- */
 function elapsed_time($date, array $elapsedTimeLabels = []): array
 {
     $elapsedTimeLabels = array_merge(DEFAULT_ELAPSED_TIME_LABELS, $elapsedTimeLabels);
 
-    if (\is_string($date)) {
-        $date = new \DateTime($date);
-    }
+    $date = create_date($date);
 
     $time = $date->getTimestamp();
-    $diff = time() - $time;
-    $timeLeft = [];
+    $timeDifference = time() - $time;
+    $timeLeftValues = [];
 
     foreach (DEFAULT_ELAPSED_TIME_OFFSETS as list($timeSingle, $timePlural, $offset)) {
-        if ($diff >= $offset) {
-            $left = floor($diff / $offset);
-            $diff -= ($left * $offset);
-            $timeLeft[] = format_elapsed_time_string((int)$left, $elapsedTimeLabels, [
+        if ($timeDifference >= $offset) {
+            $timeLeft = floor($timeDifference / $offset);
+            $timeDifference -= ($timeLeft * $offset);
+            $timeLeftValues[] = format_elapsed_time_string((int)$timeLeft, $elapsedTimeLabels, [
                 ELAPSED_TIME_LABEL_SINGLE => $timeSingle,
                 ELAPSED_TIME_LABEL_PLURAL => $timePlural,
             ]);
         }
     }
 
-    return $timeLeft;
+    return $timeLeftValues;
+}
+
+function create_date($date): \DateTime
+{
+    if (\is_string($date)) {
+        $date = new \DateTime($date);
+    }
+
+    return $date;
 }
 
 function format_elapsed_time_string(int $timeLeft, array $elapsedTimeLabels, array $timeStrings): string
