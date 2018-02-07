@@ -19,24 +19,29 @@ function rrmdir(string $directory): bool
         $objects = scandir($directory, SCANDIR_SORT_NONE);
 
         foreach ($objects as $object) {
-
-            if ($object !== '.' && $object !== '..') {
-
-                $currentDirectory = create_directory_path([$directory, $object]);
-
-                if (filetype($currentDirectory) === 'dir') {
-                    rrmdir($currentDirectory);
-                } else {
-                    unlink($currentDirectory);
-                }
-            }
+            remove_directories_and_files_in_directory($object, $directory);
         }
+
         reset($objects);
 
         return rmdir($directory);
     }
 
     return false;
+}
+
+function remove_directories_and_files_in_directory($object, string $directory): void
+{
+    if ($object !== '.' && $object !== '..') {
+
+        $currentDirectory = create_directory_path([$directory, $object]);
+
+        if (filetype($currentDirectory) === 'dir') {
+            rrmdir($currentDirectory);
+        } else {
+            unlink($currentDirectory);
+        }
+    }
 }
 
 function create_directory_path(array $directories): string

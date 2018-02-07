@@ -41,6 +41,7 @@ function array_merge(... $arrays): array
  * @param null|mixed $default
  *
  * @return null|mixed
+ * @throws Exception\PropertyNotAccessibleException
  */
 function array_get_value($array, $key, $default = null)
 {
@@ -109,7 +110,7 @@ function array_set_value(array &$array, $path, $value)
 
 function array_remove_key(&$array, $key, $default = null)
 {
-    $keys = \is_array($key) ? $key : \explode('.', $key);
+    $keys = parse_array_key_path($key);
 
     while (\count($keys) > 1) {
         $key = \array_shift($keys);
@@ -131,6 +132,31 @@ function array_remove_key(&$array, $key, $default = null)
     return $default;
 }
 
+function array_key_exists(array $array, $key): bool
+{
+    $keys = parse_array_key_path($key);
+
+    while (\count($keys) > 1) {
+        $key = \array_shift($keys);
+
+        if (\is_array($array[$key])) {
+            $array = &$array[$key];
+        }
+    }
+
+    $key = \array_shift($keys);
+
+    return isset($array[$key]) || \array_key_exists($key, $array);
+}
+
+/**
+ * @param mixed|string|array $key
+ */
+function parse_array_key_path($key): array
+{
+    return \is_array($key) ? $key : \explode('.', $key);
+}
+
 function array_remove_value(&$array, $value): array
 {
     $result = [];
@@ -144,24 +170,6 @@ function array_remove_value(&$array, $value): array
     }
 
     return $result;
-}
-
-function array_key_exists(array $array, $key): bool
-{
-    $keys = \is_array($key) ? $key : \explode('.', $key);
-
-    while (\count($keys) > 1) {
-        $key = \array_shift($keys);
-
-        if (\is_array($array[$key])) {
-            $array = &$array[$key];
-        }
-    }
-
-    $key = \array_shift($keys);
-
-    return isset($array[$key]) || \array_key_exists($key, $array);
-
 }
 
 function array_deep_search(array $array, $searchValue)
@@ -197,7 +205,7 @@ function array_flatten(array $array): array
     try {
         $result = [];
         foreach (\array_keys($array) as $key) {
-            array_flatten_assign_value_by_element_type($array[$key], $result);
+            array_flatten_value($array[$key], $result);
         }
         return \array_values(\array_unique($result));
     } catch (\Throwable $t) {
@@ -208,7 +216,7 @@ function array_flatten(array $array): array
 /**
  * @param mixed $value
  */
-function array_flatten_assign_value_by_element_type($value, array &$result): void
+function array_flatten_value($value, array &$result): void
 {
     if (\is_scalar($value)) {
         $result[] = $value;

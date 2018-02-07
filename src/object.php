@@ -22,18 +22,7 @@ function configure_object(object $object, array $properties, array $methodPrefix
 {
     try {
         foreach ($properties as $property => $value) {
-            $valueAssigned = false;
-            foreach ($methodPrefixes as $setterMethodPrefix) {
-
-                $setterMethod = concat_object_method($setterMethodPrefix, $property);
-
-                if (\method_exists($object, $setterMethod)) {
-                    $object->$setterMethod($value);
-                    $valueAssigned = true;
-                }
-            }
-
-            if (false === $valueAssigned) {
+            if (false === object_assign_value_using_setter_methods($object, [$property, $value], $methodPrefixes)) {
                 $object->$property = $value;
             }
         }
@@ -42,6 +31,22 @@ function configure_object(object $object, array $properties, array $methodPrefix
     } catch (\Throwable $t) {
         throw new PropertyNotAccessibleException($t->getMessage());
     }
+}
+
+function object_assign_value_using_setter_methods(object $object, array $parameters, array $methodPrefixes): bool
+{
+    [$property, $value] = $parameters;
+    foreach ($methodPrefixes as $setterMethodPrefix) {
+
+        $setterMethod = concat_object_method($setterMethodPrefix, $property);
+
+        if (\method_exists($object, $setterMethod)) {
+            $object->$setterMethod($value);
+            return true;
+        }
+    }
+
+    return false;
 }
 
 /**
