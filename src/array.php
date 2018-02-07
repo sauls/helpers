@@ -91,15 +91,15 @@ function array_get_value($array, $key, $default = null)
     }
 
     if (\is_array($array)) {
-        return isset_array_key_or_key_exists($array, $key) ? $array[$key] : $default;
+        return get_array_value_or_fallback_to_default($array, $key, $default);
     }
 
     return $default;
 }
 
-function isset_array_key_or_key_exists($array, $key): bool
+function get_array_value_or_fallback_to_default($array, $key, $default)
 {
-    return (isset($array[$key]) || \array_key_exists($key, $array));
+    return (isset($array[$key]) || \array_key_exists($key, $array)) ? $array[$key] : $default;
 }
 
 function is_array_and_key_exists($array, $key): bool
