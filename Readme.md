@@ -4,6 +4,7 @@
 [![Latest Stable Version](https://poser.pugx.org/sauls/helpers/v/stable)](https://packagist.org/packages/sauls/helpers)
 [![Total Downloads](https://poser.pugx.org/sauls/helpers/downloads)](https://packagist.org/packages/sauls/helpers)
 [![Coverage Status](https://coveralls.io/repos/github/sauls/helpers/badge.svg?branch=master)](https://coveralls.io/github/sauls/helpers?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sauls/helpers/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sauls/helpers/?branch=master)
 [![License](https://poser.pugx.org/sauls/helpers/license)](https://packagist.org/packages/sauls/helpers)
 
 Various helper functions to help you in everyday software development.
