@@ -12,6 +12,8 @@
 
 namespace Sauls\Component\Helper;
 
+use Sauls\Component\Helper\Exception\PropertyNotAccessibleException;
+
 function array_merge(... $arrays): array
 {
     $result = \array_shift($arrays);
@@ -56,12 +58,7 @@ function array_merge_integer_keyed_value($key, $value, &$result): void
 }
 
 /**
- * @param mixed      $array
- * @param mixed      $key
- * @param null|mixed $default
- *
- * @return null|mixed
- * @throws Exception\PropertyNotAccessibleException
+ * @throws PropertyNotAccessibleException
  */
 function array_get_value($array, $key, $default = null)
 {
@@ -69,6 +66,15 @@ function array_get_value($array, $key, $default = null)
         return $key($array, $default);
     }
 
+    return array_get_value_from_array_key_path($array, $key, $default);
+}
+
+/**
+ * @throws PropertyNotAccessibleException
+ *
+ */
+function array_get_value_from_array_key_path($array, $key, $default)
+{
     if (\is_array($key)) {
         $lastKey = array_pop($key);
         foreach ($key as $keyPart) {
@@ -81,6 +87,14 @@ function array_get_value($array, $key, $default = null)
         return $array[$key];
     }
 
+    return array_get_value_from_array_string_key_path($array, $key, $default);
+}
+
+/**
+ * @throws PropertyNotAccessibleException
+ */
+function array_get_value_from_array_string_key_path($array, $key, $default)
+{
     if ((bool)($pos = strrpos($key, '.')) !== false) {
         $array = array_get_value($array, substr($key, 0, $pos), $default);
         $key = substr($key, $pos + 1);
@@ -96,6 +110,17 @@ function array_get_value($array, $key, $default = null)
 
     return $default;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 function get_array_value_or_fallback_to_default($array, $key, $default)
 {
