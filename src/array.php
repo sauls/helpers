@@ -204,7 +204,7 @@ function array_key_exists(array $array, $key): bool
     while (\count($keys) > 1) {
         $key = \array_shift($keys);
 
-        if (\is_array($array[$key])) {
+        if (array_key_isset_and_is_array($array, $key)) {
             $array = &$array[$key];
         }
     }
@@ -212,6 +212,11 @@ function array_key_exists(array $array, $key): bool
     $key = \array_shift($keys);
 
     return isset($array[$key]) || \array_key_exists($key, $array);
+}
+
+function array_key_isset_and_is_array(array $array, $key): bool
+{
+    return isset($array[$key]) && \is_array($array[$key]);
 }
 
 /**

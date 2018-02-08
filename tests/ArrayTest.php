@@ -424,6 +424,9 @@ class ArrayTest extends TestCase
         return [
             [false, [], 'x'],
             [
+                false, [], 'a.b.c.d'
+            ],
+            [
                 true,
                 [
                     'x' => 11,
