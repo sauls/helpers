@@ -111,17 +111,6 @@ function array_get_value_from_array_string_key_path($array, $key, $default)
     return $default;
 }
 
-
-
-
-
-
-
-
-
-
-
-
 function get_array_value_or_fallback_to_default($array, $key, $default)
 {
     return (isset($array[$key]) || \array_key_exists($key, $array)) ? $array[$key] : $default;
@@ -170,8 +159,18 @@ function array_create_value(array &$array, $key): void
 
 function array_remove_key(&$array, $key, $default = null)
 {
-    $keys = parse_array_key_path($key);
+    $array = &array_remove_shift_key_array_value($array, $key);
 
+    if (can_remove_array_key($array, $key)) {
+        return array_unset_key($array, $key);
+    }
+
+    return $default;
+}
+
+function &array_remove_shift_key_array_value(&$array, &$key): array
+{
+    $keys = parse_array_key_path($key);
     while (\count($keys) > 1) {
         $key = \array_shift($keys);
 
@@ -182,14 +181,15 @@ function array_remove_key(&$array, $key, $default = null)
 
     $key = \array_shift($keys);
 
-    if (can_remove_array_key($array, $key)) {
-        $value = $array[$key];
-        unset($array[$key]);
+    return $array;
+}
 
-        return $value;
-    }
+function array_unset_key(&$array, $key)
+{
+    $value = $array[$key];
+    unset($array[$key]);
 
-    return $default;
+    return $value;
 }
 
 function can_remove_array_key($array, $key): bool
