@@ -441,15 +441,6 @@ class ArrayTest extends TestCase
             [
                 true,
                 [
-                    'a' => 1,
-                    'b' => 12,
-                    'c.d' => 17,
-                ],
-                'c.d'
-            ],
-            [
-                true,
-                [
                     'b' => 11,
                     'a' => 23,
                 ],

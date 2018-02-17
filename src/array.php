@@ -199,10 +199,6 @@ function can_remove_array_key($array, $key): bool
 
 function array_key_exists(array $array, $key): bool
 {
-    if (array_string_key_exists($array, $key)) {
-        return true;
-    }
-
     $keys = parse_array_key_path($key);
 
     while (\count($keys) > 1) {
