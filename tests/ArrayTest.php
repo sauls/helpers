@@ -791,13 +791,13 @@ class ArrayTest extends TestCase
         ];
 
         $this->assertSame([
-            'test' => 1,
-            0 => 3,
-            'nested.t' => 11,
-            'nested.0' => 50,
-            'nested.g.p' => 5,
-            'nested.g.0' => 33,
-            1 => 100,
+            0 => 'test',
+            1 => '0',
+            2 => 'nested.t',
+            3 => 'nested.0',
+            4 => 'nested.g.p',
+            5 => 'nested.g.0',
+            6 => '1',
         ], array_keys($array));
     }
 }

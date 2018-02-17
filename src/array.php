@@ -330,7 +330,7 @@ function array_keys(array $array, string $prefix = '')
         if (\is_array($value) && !empty($value)) {
             $result = array_merge($result, array_keys($value, $prefix.$key.'.'));
         } else {
-            $result[$prefix.$key] = $value;
+            $result[] = $prefix.$key;
         }
     }
 
