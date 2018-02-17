@@ -778,4 +778,35 @@ class ArrayTest extends TestCase
         $this->assertTrue(array_multiple_keys_exists($array, ['k1', 'k2']));
         $this->assertTrue(array_multiple_keys_exists($array, ['k1', 'x.break.deeper']));
     }
+
+    /**
+     * @test
+     */
+    public function should_return_array_keys()
+    {
+        $array = [
+            'test' => 1,
+            3,
+            'nested' => [
+                't' => 11,
+                50,
+                'g' => [
+                    'p' => 5,
+                    33
+                ]
+            ],
+            100,
+
+        ];
+
+        $this->assertSame([
+            'test' => 1,
+            0 => 3,
+            'nested.t' => 11,
+            'nested.0' => 50,
+            'nested.g.p' => 5,
+            'nested.g.0' => 33,
+            1 => 100,
+        ], array_keys($array));
+    }
 }

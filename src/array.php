@@ -286,6 +286,7 @@ function array_flatten(array $array): array
         foreach (\array_keys($array) as $key) {
             array_flatten_value($array[$key], $result);
         }
+
         return \array_values(\array_unique($result));
     } catch (\Throwable $t) {
         throw new \RuntimeException($t->getMessage());
@@ -323,4 +324,19 @@ function array_multiple_keys_exists(array $array, array $keys): bool
     }
 
     return $result ? true : false;
+}
+
+function array_keys(array $array, string $prefix = '')
+{
+    $result = [];
+
+    foreach ($array as $key => $value) {
+        if (\is_array($value) && !empty($value)) {
+            $result = array_merge($result, array_keys($value, $prefix.$key.'.'));
+        } else {
+            $result[$prefix.$key] = $value;
+        }
+    }
+
+    return $result;
 }
