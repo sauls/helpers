@@ -84,6 +84,18 @@ class ArrayTest extends TestCase
             ['yep', ['test' => ['me' => ['nested' => 'yep']]], 'test.me.nested'],
             ['yep', ['test' => ['me' => ['nested' => 'yep']]], ['test', 'me', 'nested']],
             [
+                'yep',
+                [
+                    'g' => 11,
+                    'c' => [
+                        'a' => 1,
+                    ],
+                    'test.key' => 'yep',
+                    'h' => 11,
+                ],
+                'test.key'
+            ],
+            [
                 'It works!',
                 ['a' => 'c', 'g' => configure_object(new \stdClass, ['apache' => 'It works!'])],
                 'g.apache',
@@ -425,6 +437,36 @@ class ArrayTest extends TestCase
             [false, [], 'x'],
             [
                 false, [], 'a.b.c.d'
+            ],
+            [
+                true,
+                [
+                    'a' => 1,
+                    'b' => 12,
+                    'c.d' => 17,
+                ],
+                'c.d'
+            ],
+            [
+                true,
+                [
+                    'b' => 11,
+                    'a' => 23,
+                ],
+                ['a']
+            ],
+            [
+                true,
+                [
+                    'b' => 11,
+                    'a' => 23,
+                    'd' => [
+                        'g' => [
+                            'f' => true
+                        ]
+                    ]
+                ],
+                ['d', 'g', 'f']
             ],
             [
                 true,
