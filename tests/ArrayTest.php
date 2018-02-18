@@ -93,7 +93,7 @@ class ArrayTest extends TestCase
                     'test.key' => 'yep',
                     'h' => 11,
                 ],
-                'test.key'
+                'test.key',
             ],
             [
                 'It works!',
@@ -436,7 +436,9 @@ class ArrayTest extends TestCase
         return [
             [false, [], 'x'],
             [
-                false, [], 'a.b.c.d'
+                false,
+                [],
+                'a.b.c.d',
             ],
             [
                 true,
@@ -444,7 +446,7 @@ class ArrayTest extends TestCase
                     'b' => 11,
                     'a' => 23,
                 ],
-                ['a']
+                ['a'],
             ],
             [
                 true,
@@ -453,11 +455,11 @@ class ArrayTest extends TestCase
                     'a' => 23,
                     'd' => [
                         'g' => [
-                            'f' => true
-                        ]
-                    ]
+                            'f' => true,
+                        ],
+                    ],
                 ],
-                ['d', 'g', 'f']
+                ['d', 'g', 'f'],
             ],
             [
                 true,
@@ -465,7 +467,7 @@ class ArrayTest extends TestCase
                     'x' => 11,
                     'y' => 12,
                 ],
-                'y'
+                'y',
             ],
             [
                 false,
@@ -482,38 +484,38 @@ class ArrayTest extends TestCase
                     'Y' => 12,
                 ],
                 'Y',
-                false
+                false,
             ],
             [
                 true,
                 [
                     'a' => [
-                        'b' => 'value'
+                        'b' => 'value',
                     ],
                     'c' => 44,
                 ],
-                'a.b'
+                'a.b',
             ],
             [
                 false,
                 [
                     'a' => [
-                        'b' => 'value'
+                        'b' => 'value',
                     ],
                     'c' => 44,
                 ],
-                'a.B'
+                'a.B',
             ],
             [
                 true,
                 [
                     'a' => [
-                        'B' => 'value'
+                        'B' => 'value',
                     ],
                     'c' => 44,
                 ],
                 'a.B',
-                false
+                false,
             ],
         ];
     }
@@ -551,14 +553,14 @@ class ArrayTest extends TestCase
                     'c' => 'd',
                     'g' => [
                         'v' => 'm',
-                    ]
+                    ],
                 ],
-                'o'
+                'o',
             ],
             [
                 [
                     0 => [
-                        0 => 'c'
+                        0 => 'c',
                     ],
                 ],
                 [
@@ -566,25 +568,25 @@ class ArrayTest extends TestCase
                     'c' => 'd',
                     'g' => [
                         'v' => 'm',
-                    ]
+                    ],
                 ],
-                'd'
+                'd',
             ],
             [
                 [
                     0 => [
                         0 => 'g',
                         1 => 'v',
-                    ]
+                    ],
                 ],
                 [
                     'a' => 'b',
                     'c' => 'd',
                     'g' => [
                         'v' => 'm',
-                    ]
+                    ],
                 ],
-                'm'
+                'm',
             ],
             [
                 [
@@ -596,7 +598,7 @@ class ArrayTest extends TestCase
                     1 => [
                         0 => 'g',
                         1 => 'v',
-                    ]
+                    ],
                 ],
                 [
                     'a' => 'b',
@@ -608,9 +610,9 @@ class ArrayTest extends TestCase
                     'c' => 'd',
                     'g' => [
                         'v' => 'm',
-                    ]
+                    ],
                 ],
-                'm'
+                'm',
             ],
         ];
     }
@@ -632,7 +634,10 @@ class ArrayTest extends TestCase
     {
         return [
             [
-                [], 'test', [], 'test',
+                [],
+                'test',
+                [],
+                'test',
             ],
             [
                 [0 => 'test'],
@@ -656,12 +661,12 @@ class ArrayTest extends TestCase
                     'test' => [
                         'o' => 11,
                         'p' => [
-                            'a' => 23
+                            'a' => 23,
                         ],
                     ],
                 ],
-                23
-            ]
+                23,
+            ],
         ];
     }
 
@@ -678,7 +683,8 @@ class ArrayTest extends TestCase
     {
         return [
             [
-                [], [],
+                [],
+                [],
             ],
             [
                 [
@@ -719,16 +725,19 @@ class ArrayTest extends TestCase
                     'b' => [
                         'c' => 'hello',
                         'g' => [
-                            'world', 'life'
+                            'world',
+                            'life',
                         ],
                         'h' => new StringObject(),
                     ],
                     'v' => 'life',
                     'm' => [
-                        15, 25, 98
+                        15,
+                        25,
+                        98,
                     ],
                 ],
-            ]
+            ],
         ];
     }
 
@@ -739,8 +748,8 @@ class ArrayTest extends TestCase
     public function should_throw_exception_when_object_cannot_be_converted_to_string()
     {
         array_flatten([
-           'a' => 11,
-           'b' => new DummyObject(),
+            'a' => 11,
+            'b' => new DummyObject(),
         ]);
     }
 
@@ -773,7 +782,7 @@ class ArrayTest extends TestCase
     /**
      * @test
      */
-    public function should_return_array_keys()
+    public function should_return_array_keys_on_associative_array(): void
     {
         $array = [
             'test' => 1,
@@ -783,21 +792,96 @@ class ArrayTest extends TestCase
                 50,
                 'g' => [
                     'p' => 5,
-                    33
-                ]
+                    33,
+                ],
             ],
             100,
 
         ];
 
-        $this->assertSame([
-            0 => 'test',
-            1 => '0',
-            2 => 'nested.t',
-            3 => 'nested.0',
-            4 => 'nested.g.p',
-            5 => 'nested.g.0',
-            6 => '1',
-        ], array_keys($array));
+        $this->assertSame(
+            [
+                0 => 'test',
+                1 => 0,
+                2 => 'nested.t',
+                3 => 'nested.0',
+                4 => 'nested.g.p',
+                5 => 'nested.g.0',
+                6 => 1,
+            ],
+            array_key_assoc($array)
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function should_return_array_keys_with_value_on_associative_array(): void
+    {
+        $array = [
+            'test' => 1,
+            3,
+            'nested' => [
+                't' => 11,
+                50,
+                'g' => [
+                    'p' => 5,
+                    33,
+                ],
+            ],
+            100,
+
+        ];
+
+        $this->assertSame(
+            [
+                'test' => 1,
+                0 => 3,
+                'nested.t' => 11,
+                'nested.0' => 50,
+                'nested.g.p' => 5,
+                'nested.g.0' => 33,
+                1 => 100,
+            ],
+            array_key_assoc_with_value($array)
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function should_return_array_diff_keys_on_associative_array(): void
+    {
+        $array1 = [
+            'a' => 'b',
+            'g' => 12,
+            'c' => [
+                'v' => 1,
+            ],
+            'x' => [
+                'y' => [
+                    'z' => 2,
+                    'b' => 33
+                ]
+            ]
+        ];
+        $array2 = [
+            'a' => 'g',
+            'h' => 11,
+            'x' => [
+                'y' => [
+                    'b' => 18
+                ]
+            ],
+        ];
+
+        $this->assertSame(
+            [
+                'g' => 12,
+                'c.v' => 1,
+                'x.y.z' => 2,
+            ],
+            array_diff_key_assoc($array1, $array2)
+        );
     }
 }

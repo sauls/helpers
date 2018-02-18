@@ -214,11 +214,6 @@ function array_key_exists(array $array, $key): bool
     return isset($array[$key]) || \array_key_exists($key, $array);
 }
 
-function array_string_key_exists(array $array, $key): bool
-{
-    return \is_string($key) && \array_key_exists($key, $array);
-}
-
 function array_key_isset_and_is_array(array $array, $key): bool
 {
     return isset($array[$key]) && \is_array($array[$key]);
@@ -322,17 +317,27 @@ function array_multiple_keys_exists(array $array, array $keys): bool
     return $result ? true : false;
 }
 
-function array_keys(array $array, string $prefix = '')
+function array_diff_key_assoc(array $array1, array $array2)
+{
+    return \array_diff_key(array_key_assoc_with_value($array1), array_key_assoc_with_value($array2));
+}
+
+function array_key_assoc_with_value(array $array, string $prefix = '')
 {
     $result = [];
 
     foreach ($array as $key => $value) {
         if (\is_array($value) && !empty($value)) {
-            $result = array_merge($result, array_keys($value, $prefix.$key.'.'));
+            $result = array_merge($result, array_key_assoc_with_value($value, $prefix.$key.'.'));
         } else {
-            $result[] = $prefix.$key;
+            $result[$prefix.$key] = $value;
         }
     }
 
     return $result;
+}
+
+function array_key_assoc(array $array)
+{
+    return \array_keys(array_key_assoc_with_value($array));
 }
