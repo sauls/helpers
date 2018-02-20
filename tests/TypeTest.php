@@ -102,9 +102,14 @@ class TypeTest extends TestCase
     {
         $this->expectException(ConverterNotFoundException::class);
         $this->expectExceptionMessage('Given value of `object` does not have any converters to type `custom`.');
-        convert_to(new DummyObject(), 'custom', [
-            new CustomTypeAConverter,
-            new CustomTypeBConverter,
-        ]);
+
+        register_converters(
+            [
+                new CustomTypeAConverter,
+                new CustomTypeBConverter,
+            ]
+        );
+
+        convert_to(new DummyObject(), 'custom');
     }
 }
