@@ -13,15 +13,15 @@
 namespace Sauls\Component\Helper\Stubs;
 
 
-class StringObject implements CustomInterface
+class JsonSerializableObject implements \JsonSerializable
 {
-    public function __toString()
-    {
-        return 'string object';
-    }
+    private $values = [
+        'x' => 2,
+        'y' => 14,
+    ];
 
-    public function toCustom()
+    public function jsonSerialize()
     {
-        return 'custom something!';
+        return $this->values;
     }
 }

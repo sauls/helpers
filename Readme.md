@@ -39,4 +39,5 @@ $ composer require sauls/helpers
 | **filesystem** | `rrmdir` |
 | **object** | `define_object, get_object_property_value, set_object_property_value` |
 | **string** | `string_camelize, string_snakeify, explode_using_multi_delimiters, base64_url_encode, base64_url_decode` |
+| **type**| `convert_to, register_converters` |
 

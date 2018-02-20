@@ -27,7 +27,8 @@
       "src/crypt.php",
       "src/class.php",
       "src/filesystem.php",
-      "src/datetime.php"
+      "src/datetime.php",
+      "src/type.php"
     ],
     "psr-4": {
       "Sauls\\Component\\Helper\\": "src/"

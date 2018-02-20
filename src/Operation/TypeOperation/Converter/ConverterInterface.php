@@ -10,18 +10,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Sauls\Component\Helper\Stubs;
+namespace Sauls\Component\Helper\Operation\TypeOperation\Converter;
 
-
-class StringObject implements CustomInterface
+interface ConverterInterface
 {
-    public function __toString()
-    {
-        return 'string object';
-    }
-
-    public function toCustom()
-    {
-        return 'custom something!';
-    }
+    public function convert($value);
+    public function supports($value): bool;
+    public function getType(): string;
+    public function getPriority(): int;
 }

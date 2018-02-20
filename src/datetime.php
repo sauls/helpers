@@ -28,8 +28,7 @@ function elapsed_time($date, array $labels = [], $format = ELAPSED_TIME_FORMAT_F
 }
 
 /**
- * @param string|\DateTime $dateFrom
- * @param string|\DateTime $dateTo
+ * @throws \Exception
  */
 function countdown($dateFrom = 'now', $dateTo, string $format = '%s%02d:%02d:%02d'): string
 {
