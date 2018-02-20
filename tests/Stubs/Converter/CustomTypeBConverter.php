@@ -10,24 +10,20 @@
  * file that was distributed with this source code.
  */
 
-namespace Sauls\Component\Helper\Stubs\Ensurers;
+namespace Sauls\Component\Helper\Stubs\Converter;
 
 use Sauls\Component\Helper\Operation\TypeOperation\Converter\ConverterInterface;
-use Sauls\Component\Helper\Stubs\CustomInterface;
 
-class CustomTypeAConverter implements ConverterInterface
+class CustomTypeBConverter implements ConverterInterface
 {
-    /**
-     * @param CustomInterface $value
-     */
-    public function convert($value): string
+    public function convert($value)
     {
-        return $value->toCustom();
+        return $value;
     }
 
     public function supports($value): bool
     {
-        return is_subclass_of($value, CustomInterface::class);
+        return \is_string($value);
     }
 
     public function getType(): string
