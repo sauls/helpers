@@ -10,13 +10,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Sauls\Component\Helper;
+namespace Sauls\Component\Helper\Operation\StringOperation;
 
-use Sauls\Component\Helper\Operation\Factory\OperationFactory;
-use Sauls\Component\Helper\Operation\FilesystemOperation;
-
-function rrmdir(string $directory): bool
+class Camelize implements CamelizeInterface
 {
-    return OperationFactory::create(FilesystemOperation\RemoveDirectoryRecursively::class)
-        ->execute($directory);
+    public function execute(string $value): string
+    {
+        return \strtr(\ucwords(\strtr($value, ['_' => ' ', '.' => '_ ', '\\' => '_ '])), [' ' => '']);
+    }
 }

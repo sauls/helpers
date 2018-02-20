@@ -12,44 +12,47 @@
 
 namespace Sauls\Component\Helper;
 
+use Sauls\Component\Helper\Operation\Factory\OperationFactory;
+use Sauls\Component\Helper\Operation\StringOperation;
+
+/**
+ * @throws \Exception
+ */
 function string_camelize(string $value): string
 {
-    return \strtr(\ucwords(\strtr($value, ['_' => ' ', '.' => '_ ', '\\' => '_ '])), [' ' => '']);
+    return OperationFactory::create(StringOperation\Camelize::class)->execute($value);
 }
 
+/**
+ * @throws \Exception
+ */
 function string_snakeify(string $value): string
 {
-    \preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $value, $matches);
-    $result = $matches[0];
-    foreach ($result as &$match) {
-        $match = $match === \strtoupper($match) ? \strtolower($match) : \lcfirst($match);
-    }
-
-    return implode('_', $result);
+    return OperationFactory::create(StringOperation\Snakeify::class)->execute($value);
 }
 
-function multi_explode(array $delimiters = ['.'], string $value): array
+/**
+ * @throws \Exception
+ */
+function explode_using_multi_delimiters(array $delimiters = ['.'], string $value): array
 {
-    return \explode($delimiters[0], \str_replace($delimiters, $delimiters[0], $value));
+    return OperationFactory::create(StringOperation\ExplodeWithMultiDelimiters::class)->execute($delimiters, $value);
 }
 
+/**
+ * @throws \Exception
+ */
 function base64_url_encode(string $value): string
 {
-    return \strtr(\base64_encode($value), '+/', '-_');
+    return OperationFactory::create(StringOperation\Base64UrlEncode::class)->execute($value);
 }
 
+/**
+ * @throws \Exception
+ */
 function base64_url_decode(string $value): string
 {
-    return base64_decode(\strtr($value, '-_', '+/'));
-}
-
-function strtr(string $string, array $parameters): string
-{
-    foreach ($parameters as $key => $value) {
-        $string = \str_replace($key, $value, $string);
-    }
-
-    return $string;
+    return OperationFactory::create(StringOperation\Base64Decode::class)->execute($value);
 }
 
 

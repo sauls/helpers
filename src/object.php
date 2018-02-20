@@ -14,83 +14,28 @@ namespace Sauls\Component\Helper;
 
 use Sauls\Component\Helper\Exception\ClassPropertyNotSetException;
 use Sauls\Component\Helper\Exception\PropertyNotAccessibleException;
+use Sauls\Component\Helper\Operation\ObjectOperation;
 
 /**
  * @throws PropertyNotAccessibleException
  */
-function configure_object(object $object, array $properties, array $methodPrefixes = ['set', 'add']): object
+function define_object(object $object, array $properties, array $methodPrefixes = ['set', 'add']): object
 {
-    try {
-        foreach ($properties as $property => $value) {
-            if (false === object_assign_value_using_setter_methods($object, [$property, $value], $methodPrefixes)) {
-                $object->$property = $value;
-            }
-        }
-
-        return $object;
-    } catch (\Throwable $t) {
-        throw new PropertyNotAccessibleException($t->getMessage());
-    }
-}
-
-function object_assign_value_using_setter_methods(object $object, array $parameters, array $methodPrefixes): bool
-{
-    [$property, $value] = $parameters;
-    foreach ($methodPrefixes as $setterMethodPrefix) {
-
-        $setterMethod = concat_object_method($setterMethodPrefix, $property);
-
-        if (\method_exists($object, $setterMethod)) {
-            $object->$setterMethod($value);
-            return true;
-        }
-    }
-
-    return false;
+    return (new ObjectOperation\DefineObject)->execute($object, $properties, $methodPrefixes);
 }
 
 /**
- * @return null|mixed
- *
  * @throws PropertyNotAccessibleException
  */
 function get_object_property_value(object $object, string $property, array $methodPrefixes = ['get', 'is'])
 {
-    try {
-        foreach ($methodPrefixes as $getterMethodPrefix) {
-            $getterMethod = concat_object_method($getterMethodPrefix, $property);
-
-            if (\method_exists($object, $getterMethod)) {
-                return $object->$getterMethod();
-            }
-        }
-
-        return $object->$property;
-    } catch (\Throwable $t) {
-        throw new PropertyNotAccessibleException($t->getMessage());
-    }
-}
-
-function concat_object_method(string $prefix, string $property): string
-{
-    return $prefix.ucfirst($property);
+    return (new ObjectOperation\GetPropertyValue)->execute($object, $property, $methodPrefixes);
 }
 
 /**
- * @param mixed $value
- *
  * @throws ClassPropertyNotSetException
  */
 function set_object_property_value(object $object, string $property, $value): void
 {
-    try {
-        $reflectionClass = new \ReflectionClass($object);
-        $reflectionProperty = $reflectionClass->getProperty($property);
-        $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue($object, $value);
-    } catch (\Exception $e) {
-        throw new ClassPropertyNotSetException(
-            sprintf('Failed to set `%s` class `%s` property value.', \get_class($object), $property)
-        );
-    }
+    (new ObjectOperation\SetPropertyValue)->execute($object, $property, $value);
 }

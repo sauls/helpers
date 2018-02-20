@@ -10,13 +10,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Sauls\Component\Helper;
+namespace Sauls\Component\Helper\Operation\ArrayOperation;
 
-use Sauls\Component\Helper\Operation\Factory\OperationFactory;
-use Sauls\Component\Helper\Operation\FilesystemOperation;
+use Sauls\Component\Helper\Operation\Operation;
 
-function rrmdir(string $directory): bool
+interface SetValueInterface extends Operation
 {
-    return OperationFactory::create(FilesystemOperation\RemoveDirectoryRecursively::class)
-        ->execute($directory);
+    public function execute(array &$array, $path, $value): void;
 }

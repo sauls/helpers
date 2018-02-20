@@ -10,13 +10,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Sauls\Component\Helper;
+namespace Sauls\Component\Helper\Operation\DateTimeOperation;
 
-use Sauls\Component\Helper\Operation\Factory\OperationFactory;
-use Sauls\Component\Helper\Operation\FilesystemOperation;
+use Sauls\Component\Helper\Operation\Operation;
 
-function rrmdir(string $directory): bool
+interface CountdownInterface extends Operation
 {
-    return OperationFactory::create(FilesystemOperation\RemoveDirectoryRecursively::class)
-        ->execute($directory);
+    public const DAY_IN_HOURS = 24;
+
+    public function execute($dateFrom = 'now', $dateTo, string $format = '%s%02d:%02d:%02d'): string;
 }

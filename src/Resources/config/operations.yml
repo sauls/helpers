@@ -1,0 +1,84 @@
+services:
+
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+  #
+  # Array operations
+  #
+  Sauls\Component\Helper\Operation\ArrayOperation\Merge: ~
+  Sauls\Component\Helper\Operation\ArrayOperation\MergeInterface: '@Sauls\Component\Helper\Operation\ArrayOperation\Merge'
+  Sauls\Component\Helper\Operation\ArrayOperation\GetValue: ~
+  Sauls\Component\Helper\Operation\ArrayOperation\GetValueInterface: '@Sauls\Component\Helper\Operation\ArrayOperation\GetValue'
+  Sauls\Component\Helper\Operation\ArrayOperation\SetValue: ~
+  Sauls\Component\Helper\Operation\ArrayOperation\SetValueInterface: '@Sauls\Component\Helper\Operation\ArrayOperation\SetValue'
+  Sauls\Component\Helper\Operation\ArrayOperation\RemoveKey: ~
+  Sauls\Component\Helper\Operation\ArrayOperation\RemoveKeyInterface: '@Sauls\Component\Helper\Operation\ArrayOperation\RemoveKey'
+  Sauls\Component\Helper\Operation\ArrayOperation\RemoveValue: ~
+  Sauls\Component\Helper\Operation\ArrayOperation\RemoveValueInterface: '@Sauls\Component\Helper\Operation\ArrayOperation\RemoveValue'
+  Sauls\Component\Helper\Operation\ArrayOperation\KeyExists: ~
+  Sauls\Component\Helper\Operation\ArrayOperation\KeyExistsInterface: '@Sauls\Component\Helper\Operation\ArrayOperation\KeyExists'
+  Sauls\Component\Helper\Operation\ArrayOperation\Flatten: ~
+  Sauls\Component\Helper\Operation\ArrayOperation\FlattenInterface: '@Sauls\Component\Helper\Operation\ArrayOperation\Flatten'
+  Sauls\Component\Helper\Operation\ArrayOperation\DeepSearch: ~
+  Sauls\Component\Helper\Operation\ArrayOperation\DeepSearchInterface: '@Sauls\Component\Helper\Operation\ArrayOperation\DeepSearch'
+  Sauls\Component\Helper\Operation\ArrayOperation\MultipleKeysExists: ~
+  Sauls\Component\Helper\Operation\ArrayOperation\MultipleKeysExistsInterface: '@Sauls\Component\Helper\Operation\ArrayOperation\MultipleKeysExists'
+  Sauls\Component\Helper\Operation\ArrayOperation\Keys: ~
+  Sauls\Component\Helper\Operation\ArrayOperation\KeysInterface: '@Sauls\Component\Helper\Operation\ArrayOperation\Keys'
+  Sauls\Component\Helper\Operation\ArrayOperation\KeysWithValue: ~
+  Sauls\Component\Helper\Operation\ArrayOperation\KeysWithValueInterface: '@Sauls\Component\Helper\Operation\ArrayOperation\KeysWithValue'
+  Sauls\Component\Helper\Operation\ArrayOperation\DiffKey: ~
+  Sauls\Component\Helper\Operation\ArrayOperation\DiffKeyInterface: '@Sauls\Component\Helper\Operation\ArrayOperation\DiffKey'
+  #
+  # Object operations
+  #
+  Sauls\Component\Helper\Operation\ObjectOperation\SetPropertyValue: ~
+  Sauls\Component\Helper\Operation\ObjectOperation\SetPropertyValueInterface: '@Sauls\Component\Helper\Operation\ObjectOperation\SetPropertyValue'
+  Sauls\Component\Helper\Operation\ObjectOperation\GetPropertyValue: ~
+  Sauls\Component\Helper\Operation\ObjectOperation\GetPropertyValueInterface: '@Sauls\Component\Helper\Operation\ObjectOperation\GetPropertyValue'
+  Sauls\Component\Helper\Operation\ObjectOperation\DefineObject: ~
+  Sauls\Component\Helper\Operation\ObjectOperation\DefineObjectInterface: '@Sauls\Component\Helper\Operation\ObjectOperation\DefineObject'
+  #
+  # Class operations
+  #
+  Sauls\Component\Helper\Operation\ClassOperation\Traits: ~
+  Sauls\Component\Helper\Operation\ClassOperation\TraitsInterface: '@Sauls\Component\Helper\Operation\ClassOperation\Traits'
+  Sauls\Component\Helper\Operation\ClassOperation\UsesTrait: ~
+  Sauls\Component\Helper\Operation\ClassOperation\UsesTraitInterface: '@Sauls\Component\Helper\Operation\ClassOperation\UsesTrait'
+  #
+  # String operations
+  #
+  Sauls\Component\Helper\Operation\StringOperation\Camelize: ~
+  Sauls\Component\Helper\Operation\StringOperation\CamelizeInterface: '@Sauls\Component\Helper\Operation\StringOperation\Camelize'
+  Sauls\Component\Helper\Operation\StringOperation\Snakeify: ~
+  Sauls\Component\Helper\Operation\StringOperation\SnakeifyInterface: '@Sauls\Component\Helper\Operation\StringOperation\Snakeify'
+  Sauls\Component\Helper\Operation\StringOperation\ExplodeWithMultiDelimiters: ~
+  Sauls\Component\Helper\Operation\StringOperation\ExplodeWithMultiDelimitersInterface: '@Sauls\Component\Helper\Operation\StringOperation\ExplodeWithMultiDelimiters'
+  Sauls\Component\Helper\Operation\StringOperation\Base64UrlEncode: ~
+  Sauls\Component\Helper\Operation\StringOperation\Base64UrlEncodeInterface: '@Sauls\Component\Helper\Operation\StringOperation\Base64UrlEncode'
+  Sauls\Component\Helper\Operation\StringOperation\Base64Decode: ~
+  Sauls\Component\Helper\Operation\StringOperation\Base64DecodeInterface: '@Sauls\Component\Helper\Operation\StringOperation\Base64Decode'
+  #
+  # Crypt operations
+  #
+  Sauls\Component\Helper\Operation\CryptOperation\DataEncrypt: ~
+  Sauls\Component\Helper\Operation\CryptOperation\DataEncryptInterface: '@Sauls\Component\Helper\Operation\CryptOperation\DataEncrypt'
+  Sauls\Component\Helper\Operation\CryptOperation\DataDecrypt: ~
+  Sauls\Component\Helper\Operation\CryptOperation\DataDecryptInterface: '@Sauls\Component\Helper\Operation\CryptOperation\DataDecrypt'
+  #
+  # Filesystem operations
+  #
+  Sauls\Component\Helper\Operation\FilesystemOperation\RemoveDirectoryRecursively: ~
+  Sauls\Component\Helper\Operation\FilesystemOperation\RemoveDirectoryRecursivelyInterface: '@Sauls\Component\Helper\Operation\FilesystemOperation\RemoveDirectoryRecursively'
+  #
+  # DateTime operations
+  #
+  Sauls\Component\Helper\Operation\DateTimeOperation\ElapsedTime: ~
+  Sauls\Component\Helper\Operation\DateTimeOperation\ElapsedTimeInterface: '@Sauls\Component\Helper\Operation\DateTimeOperation\ElapsedTime'
+  Sauls\Component\Helper\Operation\DateTimeOperation\Countdown: ~
+  Sauls\Component\Helper\Operation\DateTimeOperation\CountdownInterface: '@Sauls\Component\Helper\Operation\DateTimeOperation\Countdown'
+
+
+

@@ -10,13 +10,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Sauls\Component\Helper;
+namespace Sauls\Component\Helper\Operation\StringOperation;
 
-use Sauls\Component\Helper\Operation\Factory\OperationFactory;
-use Sauls\Component\Helper\Operation\FilesystemOperation;
-
-function rrmdir(string $directory): bool
+class ExplodeWithMultiDelimiters implements ExplodeWithMultiDelimitersInterface
 {
-    return OperationFactory::create(FilesystemOperation\RemoveDirectoryRecursively::class)
-        ->execute($directory);
+    public function execute(array $delimiters = [], string $value): array
+    {
+        return \explode($delimiters[0], \str_replace($delimiters, $delimiters[0], $value));
+    }
 }

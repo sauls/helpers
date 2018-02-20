@@ -22,7 +22,7 @@ class ArrayTest extends TestCase
      * @test
      * @dataProvider getArraysToMergeData
      */
-    public function should_merge_two_given_arrays_into_one(array $expectedArray, array $array1, array $array2)
+    public function should_merge_two_given_arrays_into_one(array $expectedArray, array $array1, array $array2): void
     {
         $this->assertSame($expectedArray, array_merge($array1, $array2));
     }
@@ -61,20 +61,12 @@ class ArrayTest extends TestCase
     /**
      * @test
      * @dataProvider getVariousArraysForGetArrayValue()
-     *
-     * @param mixed      $expected
-     * @param mixed      $array
-     * @param mixed      $key
-     * @param mixed|null $default
      */
-    public function should_get_array_value_by_given_values($expected, $array, $key, $default = null)
+    public function should_get_array_value_by_given_values($expected, $array, $key, $default = null): void
     {
         $this->assertSame($expected, array_get_value($array, $key, $default));
     }
 
-    /**
-     * @throws Exception\PropertyNotAccessibleException
-     */
     public function getVariousArraysForGetArrayValue(): array
     {
         return [
@@ -97,7 +89,7 @@ class ArrayTest extends TestCase
             ],
             [
                 'It works!',
-                ['a' => 'c', 'g' => configure_object(new \stdClass, ['apache' => 'It works!'])],
+                ['a' => 'c', 'g' => define_object(new \stdClass, ['apache' => 'It works!'])],
                 'g.apache',
             ],
             [
@@ -428,7 +420,7 @@ class ArrayTest extends TestCase
      */
     public function should_check_if_given_key_exists_in_array($expected, $array, $key, bool $caseSensitive = true)
     {
-        $this->assertSame($expected, array_key_exists($array, $key, $caseSensitive));
+        $this->assertSame($expected, array_key_exists($key, $array, $caseSensitive));
     }
 
     public function getArrayKeyExistsData(): array
@@ -619,59 +611,6 @@ class ArrayTest extends TestCase
 
     /**
      * @test
-     * @dataProvider getArrayDeppSearchValueData
-     *
-     * @param mixed $key
-     * @param mixed $value
-     * @param mixed $searchValue
-     */
-    public function should_return_array_deep_search_value_path_array(array $expected, $key, $value, $searchValue)
-    {
-        $this->assertSame($expected, array_deep_search_value($key, $value, $searchValue));
-    }
-
-    public function getArrayDeppSearchValueData(): array
-    {
-        return [
-            [
-                [],
-                'test',
-                [],
-                'test',
-            ],
-            [
-                [0 => 'test'],
-                'test',
-                [
-                    'x' => 1,
-                    'y' => 2,
-                    'test' => 11,
-                ],
-                11,
-            ],
-            [
-                [
-                    0 => 'test',
-                    1 => 'p',
-                    2 => 'a',
-                ],
-                'test',
-                [
-                    'y' => 'u',
-                    'test' => [
-                        'o' => 11,
-                        'p' => [
-                            'a' => 23,
-                        ],
-                    ],
-                ],
-                23,
-            ],
-        ];
-    }
-
-    /**
-     * @test
      * @dataProvider getArrayFlattenData
      */
     public function should_flatten_given_array($expected, $array)
@@ -771,12 +710,12 @@ class ArrayTest extends TestCase
             'k5' => 11,
         ];
 
-        $this->assertFalse(array_multiple_keys_exists([], ['theKey']));
         $this->assertFalse(array_multiple_keys_exists([], []));
-        $this->assertFalse(array_multiple_keys_exists($array, ['one']));
-        $this->assertTrue(array_multiple_keys_exists($array, ['k1']));
-        $this->assertTrue(array_multiple_keys_exists($array, ['k1', 'k2']));
-        $this->assertTrue(array_multiple_keys_exists($array, ['k1', 'x.break.deeper']));
+        $this->assertFalse(array_multiple_keys_exists(['theKey'], []));
+        $this->assertFalse(array_multiple_keys_exists(['one'], $array));
+        $this->assertTrue(array_multiple_keys_exists(['k1'], $array));
+        $this->assertTrue(array_multiple_keys_exists(['k1', 'k2'], $array));
+        $this->assertTrue(array_multiple_keys_exists(['k1', 'x.break.deeper'], $array));
     }
 
     /**
@@ -809,14 +748,14 @@ class ArrayTest extends TestCase
                 5 => 'nested.g.0',
                 6 => 1,
             ],
-            array_key_assoc($array)
+            array_keys($array)
         );
     }
 
     /**
      * @test
      */
-    public function should_return_array_keys_with_value_on_associative_array(): void
+    public function should_return_array_keys_with_value(): void
     {
         $array = [
             'test' => 1,
@@ -843,14 +782,32 @@ class ArrayTest extends TestCase
                 'nested.g.0' => 33,
                 1 => 100,
             ],
-            array_key_assoc_with_value($array)
+            array_keys_with_value($array)
         );
     }
 
     /**
      * @test
      */
-    public function should_return_array_diff_keys_on_associative_array(): void
+    public function should_return_array_diff(): void
+    {
+        $array1 = array('blue' => 1, 'red' => 2, 'green' => 3, 'purple' => 4);
+        $array2 = array('green' => 5, 'yellow' => 7, 'cyan' => 8);
+
+        $this->assertSame(
+            [
+                'blue' => 1,
+                'red' => 2,
+                'purple' => 4,
+            ],
+            array_diff_key($array1, $array2)
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function should_return_array_diff_on_associative_array(): void
     {
         $array1 = [
             'a' => 'b',
@@ -881,7 +838,7 @@ class ArrayTest extends TestCase
                 'c.v' => 1,
                 'x.y.z' => 2,
             ],
-            array_diff_key_assoc($array1, $array2)
+            array_diff_key($array1, $array2)
         );
     }
 }

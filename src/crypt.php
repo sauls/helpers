@@ -12,25 +12,21 @@
 
 namespace Sauls\Component\Helper;
 
-use Defuse\Crypto\Crypto;
+use Sauls\Component\Helper\Operation\Factory\OperationFactory;
+use Sauls\Component\Helper\Operation\CryptOperation;
 
 /**
- * @param mixed $encrypt
- *
- * @return string
- * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
+ * @throws \Exception
  */
-function data_encrypt($encrypt, string $key): string
+function data_encrypt($data, string $key): string
 {
-    return Crypto::encryptWithPassword(serialize($encrypt), $key);
+    return OperationFactory::create(CryptOperation\DataEncrypt::class)->execute($data, $key);
 }
 
 /**
- * @return mixed
- * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
- * @throws \Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException
+ * @throws \Exception
  */
-function data_decrypt(string $decrypt, string $key)
+function data_decrypt(string $data, string $key)
 {
-    return unserialize(Crypto::decryptWithPassword($decrypt, $key));
+    return OperationFactory::create(CryptOperation\DataDecrypt::class)->execute($data, $key);
 }

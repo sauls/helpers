@@ -48,12 +48,10 @@ class DateTimeTest extends TestCase
     /**
      * @test
      * @dataProvider getPrintElapsedTimeShortStringsData
-     *
-     * @param string|\DateTime $dateTime
      */
     public function should_print_elapsed_time_short_strings($dateTime, string $expected, array $labels = [])
     {
-        $this->assertContains($expected, print_elapsed_time_short($dateTime, $labels));
+        $this->assertContains($expected, elapsed_time($dateTime, $labels, ELAPSED_TIME_FORMAT_SHORT));
     }
 
     /**
@@ -70,7 +68,7 @@ class DateTimeTest extends TestCase
             [(new \DateTime())->modify('-7 minute'), 'm'],
             [(new \DateTime())->modify('-1 hour'), 'h'],
             [(new \DateTime())->modify('-7 days'), 'w'],
-            [(new \DateTime())->modify('-7 days'), 'savaite', ['single' => ['{week}' => 'savaite']]],
+            [(new \DateTime())->modify('-7 days'), 'savaite', ['singular' => ['{week}' => 'savaite']]],
             [(new \DateTime())->modify('-1 day'), 'd'],
             [(new \DateTime())->modify('-1 month'), 'mo'],
             [(new \DateTime())->modify('-1 year'), 'mo'],
@@ -85,7 +83,7 @@ class DateTimeTest extends TestCase
      */
     public function should_print_elapsed_time_long_strings($dateTime, string $expected, array $labels = [])
     {
-        $this->assertContains($expected, print_elapsed_time_long($dateTime, $labels));
+        $this->assertContains($expected, elapsed_time($dateTime, $labels));
     }
 
     /**
@@ -98,45 +96,12 @@ class DateTimeTest extends TestCase
         return [
             [(clone $now)->modify('-3 month -1 hour -29 minutes -26 seconds')->format('Y-m-d H:i:s'), '3mo 2d 1h 29m'],
             [(new \DateTime())->modify('-1 year -1 month'), 'yr'],
-            [(new \DateTime())->modify('-1 year -1 month'), 'years', ['single' => ['{year}' => 'years']]],
+            [(new \DateTime())->modify('-1 year -1 month'), 'years', ['singular' => ['{year}' => 'years']]],
             [
                 (new \DateTime())->modify('-1 year -1 month'),
                 '1metai 1menesis 18valandu',
-                ['single' => ['{year}' => 'metai', '{month}' => 'menesis'], 'plural' => ['{hours}' => 'valandu']],
+                ['singular' => ['{year}' => 'metai', '{month}' => 'menesis'], 'plural' => ['{hours}' => 'valandu']],
             ],
-        ];
-    }
-
-    /**
-     * @test
-     * @dataProvider getFormatElapsedTimeStringData
-     */
-    public function should_format_elapsed_time_strings(
-        $expected,
-        int $timeLeft,
-        array $elapsedTimeLabels,
-        array $timeStrings
-    ) {
-        $this->assertSame($expected, format_elapsed_time_string($timeLeft, $elapsedTimeLabels, $timeStrings));
-    }
-
-    public function getFormatElapsedTimeStringData(): array
-    {
-        return [
-            ['1s', 1, DEFAULT_ELAPSED_TIME_LABELS, ['single' => '{second}']],
-            ['2s', 2, DEFAULT_ELAPSED_TIME_LABELS, ['plural' => '{seconds}']],
-            [
-                '1-eri metai',
-                1,
-                array_merge(DEFAULT_ELAPSED_TIME_LABELS, ['single' => ['{year}' => '-eri metai']]),
-                ['single' => '{year}'],
-            ],
-            [
-                '23menesiai',
-                23,
-                array_merge(DEFAULT_ELAPSED_TIME_LABELS, ['plural' => ['{months}' => 'menesiai']]),
-                ['plural' => '{months}'],
-            ]
         ];
     }
 }

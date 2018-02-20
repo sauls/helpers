@@ -24,9 +24,9 @@ class ObjectTest extends TestCase
      *
      * @throws Exception\PropertyNotAccessibleException
      */
-    public function should_configure_object_with_given_properties()
+    public function should_define_object_with_given_properties()
     {
-        $dummyObject = configure_object(new DummyObject(), [
+        $dummyObject = define_object(new DummyObject(), [
             'property1' => 'vvv',
             'property2' => 'zzz',
             'property3' => 'xxx',
@@ -45,7 +45,7 @@ class ObjectTest extends TestCase
     {
         $this->expectException(PropertyNotAccessibleException::class);
 
-        configure_object(new DummyObject(), [
+        define_object(new DummyObject(), [
            'secret' => 'Not so secret...',
         ]);
     }

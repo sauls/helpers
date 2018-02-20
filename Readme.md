@@ -32,11 +32,11 @@ $ composer require sauls/helpers
 
 | Group | Functions |
 |:--:|:---------:|
-| **array** | `array_merge, array_get_value, array_set_value, array_remove_key, array_remove_value, array_key_exists, array_deep_search, array_multiple_keys_exists, array_flatten, array_diff_key_assoc, array_key_assoc_with_value, array_key_assoc` |
+| **array** | `array_merge, array_get_value, array_set_value, array_remove_key, array_key_exists, array_remove_value, array_deep_search, array_flatten, array_multiple_keys_exists, array_keys, array_keys_with_value, array_diff_key` |
 | **class** | `class_traits, class_uses_trait` |
 | **crypt** | `data_encrypt, data_decrypt` |
-| **datetime** | `print_elapsed_time_short, print_elapsed_time_long, elapsed_time, countdown` |
-| **filesystem** | `rrdir` |
-| **object** | `configure_object, get_object_property_value, set_object_property_value` |
-| **string** | `camelize, snakeify, multi_explode, base64_url_encode, base64_url_decode, strtr` |
+| **datetime** | `elapsed_time, countdown` |
+| **filesystem** | `rrmdir` |
+| **object** | `define_object, get_object_property_value, set_object_property_value` |
+| **string** | `string_camelize, string_snakeify, explode_using_multi_delimiters, base64_url_encode, base64_url_decode` |
 

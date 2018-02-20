@@ -10,13 +10,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Sauls\Component\Helper;
+namespace Sauls\Component\Helper\Operation\CryptOperation;
 
-use Sauls\Component\Helper\Operation\Factory\OperationFactory;
-use Sauls\Component\Helper\Operation\FilesystemOperation;
+use Defuse\Crypto\Crypto;
 
-function rrmdir(string $directory): bool
+class DataDecrypt implements DataDecryptInterface
 {
-    return OperationFactory::create(FilesystemOperation\RemoveDirectoryRecursively::class)
-        ->execute($directory);
+    public function execute(string $data, string $key)
+    {
+        return \unserialize(Crypto::decryptWithPassword($data, $key));
+    }
 }

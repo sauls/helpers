@@ -10,13 +10,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Sauls\Component\Helper;
+namespace Sauls\Component\Helper\Operation\ArrayOperation;
 
-use Sauls\Component\Helper\Operation\Factory\OperationFactory;
-use Sauls\Component\Helper\Operation\FilesystemOperation;
 
-function rrmdir(string $directory): bool
+abstract class AbstractOperation
 {
-    return OperationFactory::create(FilesystemOperation\RemoveDirectoryRecursively::class)
-        ->execute($directory);
+    protected function splitDotNotatedKeyToArray($key): array
+    {
+        return \is_array($key) ? $key : \explode('.', $key);
+    }
 }
