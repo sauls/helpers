@@ -1,7 +1,7 @@
 # Sauls Helpers
 
 [![Build Status](https://travis-ci.org/sauls/helpers.svg?branch=master)](https://travis-ci.org/sauls/helpers)
-[![Latest Stable Version](https://poser.pugx.org/sauls/helpers/v/stable)](https://packagist.org/packages/sauls/helpers)
+[![Packagist](https://img.shields.io/packagist/v/sauls/helpers.svg)](https://packagist.org/packages/sauls/helpers)
 [![Total Downloads](https://img.shields.io/packagist/dt/sauls/helpers.svg)](https://packagist.org/packages/sauls/helpers)
 [![Coverage Status](https://img.shields.io/coveralls/github/sauls/helpers.svg)](https://coveralls.io/github/sauls/helpers?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sauls/helpers/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sauls/helpers/?branch=master)
