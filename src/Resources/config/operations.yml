@@ -42,6 +42,9 @@ services:
   Sauls\Component\Helper\Operation\ArrayOperation\KeysWithValueInterface: '@Sauls\Component\Helper\Operation\ArrayOperation\KeysWithValue'
   Sauls\Component\Helper\Operation\ArrayOperation\DiffKey: ~
   Sauls\Component\Helper\Operation\ArrayOperation\DiffKeyInterface: '@Sauls\Component\Helper\Operation\ArrayOperation\DiffKey'
+  Sauls\Component\Helper\Operation\ArrayOperation\KeyChildsExist: ~
+  Sauls\Component\Helper\Operation\ArrayOperation\KeyChildsExistInterface: '@Sauls\Component\Helper\Operation\ArrayOperation\KeyChildsExist'
+
   #
   # Object operations
   #
