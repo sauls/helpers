@@ -26,7 +26,6 @@ class TypeTest extends TestCase
 {
     /**
      * @test
-     * @throws \Exception
      */
     public function should_convert_array_type(): void
     {
@@ -53,7 +52,6 @@ class TypeTest extends TestCase
 
     /**
      * @test
-     * @throws \Exception
      */
     public function should_throw_exception_when_type_converter_is_not_registered(): void
     {
@@ -80,9 +78,8 @@ class TypeTest extends TestCase
 
     /**
      * @test
-     * @throws \Exception
      */
-    public function should_convert_to_custom_b_type()
+    public function should_convert_to_custom_b_type(): void
     {
         register_converters([
             new CustomTypeAConverter,
@@ -96,9 +93,8 @@ class TypeTest extends TestCase
 
     /**
      * @test
-     * @throws \Exception
      */
-    public function should_throw_convertr_not_found_exception()
+    public function should_throw_convertr_not_found_exception(): void
     {
         $this->expectException(ConverterNotFoundException::class);
         $this->expectExceptionMessage('Given value of `object` does not have any converters to type `custom`.');

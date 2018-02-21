@@ -20,7 +20,7 @@ class StringTest extends TestCase
      * @test
      * @dataProvider getDataArrayForStringCamelize
      */
-    public function should_camelize_given_strings(string $expected, string $value)
+    public function should_camelize_given_strings(string $expected, string $value): void
     {
         $this->assertSame($expected, string_camelize($value));
     }
@@ -40,7 +40,7 @@ class StringTest extends TestCase
      * @test
      * @dataProvider getDataArrayForStringSnakeify
      */
-    public function should_snakeify_given_strings(string $expected, string $value)
+    public function should_snakeify_given_strings(string $expected, string $value): void
     {
         $this->assertSame($expected, string_snakeify($value));
     }
@@ -57,18 +57,20 @@ class StringTest extends TestCase
     /**
      * @test
      */
-    public function should_explode_string_by_multiple_delimiters()
+    public function should_explode_string_by_multiple_delimiters(): void
     {
         $this->assertSame(['one', 'two', 'three'], explode_using_multi_delimiters(['.'], 'one.two.three'));
         $this->assertSame(['one', 'two', 'three'], explode_using_multi_delimiters(['.', ','], 'one.two,three'));
-        $this->assertSame(['one', 'two', 'three', 'four'], explode_using_multi_delimiters(['.', ',', '#'], 'one.two,three#four'));
-        $this->assertSame(['one', 'two', 'three', 'four|five'], explode_using_multi_delimiters(['.', ',', '#'], 'one.two,three#four|five'));
+        $this->assertSame(['one', 'two', 'three', 'four'],
+            explode_using_multi_delimiters(['.', ',', '#'], 'one.two,three#four'));
+        $this->assertSame(['one', 'two', 'three', 'four|five'],
+            explode_using_multi_delimiters(['.', ',', '#'], 'one.two,three#four|five'));
     }
 
     /**
      * @test
      */
-    public function should_base64_encode_given_urls()
+    public function should_base64_encode_given_urls(): void
     {
         $this->assertSame('VGhpcyBpcyBhbiBlbmNvZGVkIHN0cmluZw==', base64_url_encode('This is an encoded string'));
         $this->assertSame('YcSNacWrIC0gdGhhbmsgeW91IQ==', base64_url_encode('ačiū - thank you!'));
@@ -78,7 +80,7 @@ class StringTest extends TestCase
     /**
      * @test
      */
-    public function should_base64_decode_given_urls()
+    public function should_base64_decode_given_urls(): void
     {
         $this->assertSame('This is an encoded string', base64_url_decode('VGhpcyBpcyBhbiBlbmNvZGVkIHN0cmluZw=='));
         $this->assertSame('ačiū - thank you!', base64_url_decode('YcSNacWrIC0gdGhhbmsgeW91IQ=='));
@@ -89,8 +91,11 @@ class StringTest extends TestCase
      * @test
      * @dataProvider getStrtrData
      */
-    public function should_replace_string_parts_with_given_representations(string $expected, string $string, array $parameters)
-    {
+    public function should_replace_string_parts_with_given_representations(
+        string $expected,
+        string $string,
+        array $parameters
+    ): void {
         $this->assertSame($expected, strtr($string, $parameters));
     }
 
@@ -102,17 +107,17 @@ class StringTest extends TestCase
                 '{s1} s2',
                 [
                     '{s1}' => 'Hello',
-                    's2' => 'world'
-                ]
+                    's2' => 'world',
+                ],
             ],
             [
                 'This is test x and this y',
                 'This is test %param% and this :param',
                 [
                     '%param%' => 'x',
-                    ':param' => 'y'
-                ]
-            ]
+                    ':param' => 'y',
+                ],
+            ],
         ];
     }
 }

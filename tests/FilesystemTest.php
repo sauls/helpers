@@ -47,10 +47,7 @@ class FilesystemTest extends TestCase
         }
     }
 
-    /**
-     * @return string
-     */
-    protected function getTestDirectory()
+    protected function getTestDirectory(): string
     {
         return __DIR__ . '/tmp';
     }
@@ -58,7 +55,7 @@ class FilesystemTest extends TestCase
     /**
      * @test
      */
-    public function should_remove_directories()
+    public function should_remove_directories(): void
     {
         $directory = $this->getTestDirectory();
         

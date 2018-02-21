@@ -19,12 +19,8 @@ class DateTimeTest extends TestCase
     /**
      * @test
      * @dataProvider getCountdownDatesData
-     *
-     * @param $from
-     * @param $to
-     * @param $result
      */
-    public function should_return_correct_countdown_by_given_format($from, $to, $result)
+    public function should_return_correct_countdown_by_given_format($from, $to, $result): void
     {
         $this->assertEquals($result, countdown($from, $to));
     }
@@ -49,7 +45,7 @@ class DateTimeTest extends TestCase
      * @test
      * @dataProvider getPrintElapsedTimeShortStringsData
      */
-    public function should_print_elapsed_time_short_strings($dateTime, string $expected, array $labels = [])
+    public function should_print_elapsed_time_short_strings($dateTime, string $expected, array $labels = []): void
     {
         $this->assertContains($expected, elapsed_time($dateTime, $labels, ELAPSED_TIME_FORMAT_SHORT));
     }
@@ -78,10 +74,8 @@ class DateTimeTest extends TestCase
     /**
      * @test
      * @dataProvider getPrintElapsedTimeLongStringsData
-     *
-     * @param string|\DateTime $dateTime
      */
-    public function should_print_elapsed_time_long_strings($dateTime, string $expected, array $labels = [])
+    public function should_print_elapsed_time_long_strings($dateTime, string $expected, array $labels = []): void
     {
         $this->assertContains($expected, elapsed_time($dateTime, $labels));
     }

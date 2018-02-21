@@ -24,7 +24,7 @@ class ClassTest extends TestCase
     /**
      * @test
      */
-    public function should_return_class_and_class_child_traits()
+    public function should_return_class_and_class_child_traits(): void
     {
         $this->assertSame([], class_traits(DummyObject::class));
         $this->assertSame([UselessTrait::class => UselessTrait::class], class_traits(DummyOneTraitObject::class));
@@ -37,7 +37,7 @@ class ClassTest extends TestCase
     /**
      * @test
      */
-    public function should_check_if_class_has_given_trait()
+    public function should_check_if_class_has_given_trait(): void
     {
         $this->assertFalse(class_uses_trait(DummyObject::class, UselessTrait::class));
         $this->assertTrue(class_uses_trait(DummyOneTraitObject::class, UselessTrait::class));

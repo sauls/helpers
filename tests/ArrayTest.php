@@ -111,13 +111,6 @@ class ArrayTest extends TestCase
     /**
      * @test
      * @dataProvider getArraysForArrayAssign
-     *
-     * @param mixed $expected
-     * @param mixed $array
-     * @param mixed $key
-     * @param mixed $value
-     * @param mixed $getKeyName
-     * @param mixed $getKeyValueDefault
      */
     public function should_assign_array_value_by_given_values(
         $expected,
@@ -126,7 +119,7 @@ class ArrayTest extends TestCase
         $value,
         $getKeyName,
         $getKeyValueDefault = null
-    ) {
+    ): void {
         array_set_value($array, $key, $value);
 
         $this->assertSame($expected, array_get_value($array, $getKeyName, $getKeyValueDefault));
@@ -151,13 +144,8 @@ class ArrayTest extends TestCase
     /**
      * @test
      * @dataProvider getVariousArraysForSetArrayValue
-     *
-     * @param mixed $expected
-     * @param mixed $array
-     * @param mixed $key
-     * @param mixed $value
      */
-    public function should_set_array_value_by_given_values($expected, $array, $key, $value)
+    public function should_set_array_value_by_given_values($expected, $array, $key, $value): void
     {
         array_set_value($array, $key, $value);
 
@@ -204,7 +192,7 @@ class ArrayTest extends TestCase
     /**
      * @test
      */
-    public function should_merge_two_large_arrays()
+    public function should_merge_two_large_arrays(): void
     {
         $array1 = [
             'a' => 1,
@@ -266,7 +254,7 @@ class ArrayTest extends TestCase
         $key,
         $default = null,
         array $expectedArray = []
-    ) {
+    ): void {
         $this->assertSame($expected, array_remove_key($array, $key, $default));
 
         if (!empty($expectedArray)) {
@@ -357,16 +345,13 @@ class ArrayTest extends TestCase
     /**
      * @test
      * @dataProvider getArrayRemoveValueData
-     *
-     * @param mixed $expected
-     * @param mixed $value
      */
     public function should_remove_array_element_by_given_value(
         $expected,
         array $array,
         $value,
         array $expectedArray = []
-    ) {
+    ): void {
         $this->assertSame($expected, array_remove_value($array, $value));
 
         if (!empty($expectedArray)) {
@@ -414,11 +399,8 @@ class ArrayTest extends TestCase
     /**
      * @test
      * @dataProvider getArrayKeyExistsData()
-     *
-     * @param mixed $expected
-     * @param mixed $key
      */
-    public function should_check_if_given_key_exists_in_array($expected, $array, $key, bool $caseSensitive = true)
+    public function should_check_if_given_key_exists_in_array($expected, $array, $key, bool $caseSensitive = true): void
     {
         $this->assertSame($expected, array_key_exists($key, $array, $caseSensitive));
     }
@@ -516,7 +498,7 @@ class ArrayTest extends TestCase
      * @test
      * @expectedException \TypeError
      */
-    public function should_throw_error_when_not_array_passed_to_array_key_exists()
+    public function should_throw_error_when_not_array_passed_to_array_key_exists(): void
     {
         array_key_exists('I am a string.', 'value');
     }
@@ -526,7 +508,7 @@ class ArrayTest extends TestCase
      * @dataProvider getArrayDeepSearchData
      *
      */
-    public function should_return_array_deep_search_array_with_path_arrays_to_value($expected, array $array, $value)
+    public function should_return_array_deep_search_array_with_path_arrays_to_value($expected, array $array, $value): void
     {
         $this->assertSame($expected, array_deep_search($array, $value));
     }
@@ -613,7 +595,7 @@ class ArrayTest extends TestCase
      * @test
      * @dataProvider getArrayFlattenData
      */
-    public function should_flatten_given_array($expected, $array)
+    public function should_flatten_given_array($expected, $array): void
     {
         $this->assertSame($expected, array_flatten($array));
     }
@@ -684,7 +666,7 @@ class ArrayTest extends TestCase
      * @test
      * @expectedException \RuntimeException
      */
-    public function should_throw_exception_when_object_cannot_be_converted_to_string()
+    public function should_throw_exception_when_object_cannot_be_converted_to_string(): void
     {
         array_flatten([
             'a' => 11,
@@ -695,7 +677,7 @@ class ArrayTest extends TestCase
     /**
      * @test
      */
-    public function should_check_if_multiple_array_keys_exists()
+    public function should_check_if_multiple_array_keys_exists(): void
     {
         $array = [
             'k1' => 11,
