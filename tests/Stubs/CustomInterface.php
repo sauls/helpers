@@ -13,15 +13,7 @@
 namespace Sauls\Component\Helper\Stubs;
 
 
-class StringObject implements CustomInterface
+interface CustomInterface
 {
-    public function __toString()
-    {
-        return 'string object';
-    }
-
-    public function toCustom()
-    {
-        return 'custom something!';
-    }
+    public function toCustom();
 }

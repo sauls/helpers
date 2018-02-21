@@ -12,16 +12,15 @@
 
 namespace Sauls\Component\Helper\Stubs;
 
-
-class StringObject implements CustomInterface
+class TraversableObject implements \IteratorAggregate
 {
-    public function __toString()
-    {
-        return 'string object';
-    }
+    private $values = [
+        'a' => 1,
+        'b' => 2
+    ];
 
-    public function toCustom()
+    public function getIterator()
     {
-        return 'custom something!';
+        return new \ArrayIterator($this->values);
     }
 }

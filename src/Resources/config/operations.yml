@@ -1,9 +1,20 @@
+#
+# Dependency injection for operations
+#
 services:
 
   _defaults:
     autowire: true
     autoconfigure: true
     public: true
+
+  _instanceof:
+    #
+    # Auto tag Converters to Converter collection
+    #
+    Sauls\Component\Helper\Operation\TypeOperation\Converter\ConverterInterface:
+      tags: ['sauls_helper.operation.convert_to.converter']
+
   #
   # Array operations
   #
@@ -79,6 +90,16 @@ services:
   Sauls\Component\Helper\Operation\DateTimeOperation\ElapsedTimeInterface: '@Sauls\Component\Helper\Operation\DateTimeOperation\ElapsedTime'
   Sauls\Component\Helper\Operation\DateTimeOperation\Countdown: ~
   Sauls\Component\Helper\Operation\DateTimeOperation\CountdownInterface: '@Sauls\Component\Helper\Operation\DateTimeOperation\Countdown'
-
-
-
+  #
+  # Type operations
+  #
+  Sauls\Component\Helper\Operation\TypeOperation\Collection\ConverterCollection:
+      arguments: [!tagged sauls_helper.operation.convert_to.converter]
+  Sauls\Component\Helper\Operation\TypeOperation\Collection\ConverterCollectionInterface: '@Sauls\Component\Helper\Operation\TypeOperation\Collection\ConverterCollection'
+  Sauls\Component\Helper\Operation\TypeOperation\ConvertTo: ~
+  Sauls\Component\Helper\Operation\TypeOperation\ConvertToInterface: '@Sauls\Component\Helper\Operation\TypeOperation\ConvertTo'
+  # - To Array Converters
+  Sauls\Component\Helper\Operation\TypeOperation\Converter\ArrayToArrayConverter: ~
+  Sauls\Component\Helper\Operation\TypeOperation\Converter\TraversableToArrayConverter: ~
+  Sauls\Component\Helper\Operation\TypeOperation\Converter\JsonSerializableToArrayConverter: ~
+  Sauls\Component\Helper\Operation\TypeOperation\Converter\CastToArrayConverter: ~
