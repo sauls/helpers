@@ -823,4 +823,36 @@ class ArrayTest extends TestCase
             array_diff_key($array1, $array2)
         );
     }
+
+    /**
+     * @test
+     */
+    public function should_check_if_array_key_childs_exist(): void
+    {
+        $array = [
+            'key1' => 1,
+            'key2' => [
+                'a' => 23,
+                'b' => 1,
+                'c' => 89,
+            ],
+            'key3' => 'hello',
+            'key4' => [
+                'b' => [
+                    'c' => [
+                        'x' => 1,
+                        'y' => 2,
+                        'z' => 23,
+                    ]
+                ],
+            ]
+        ];
+
+        $this->assertFalse(array_key_childs_exist('key1', $array));
+        $this->assertFalse(array_key_childs_exist('key3', $array));
+        $this->assertTrue(array_key_childs_exist('key2', $array));
+        $this->assertTrue(array_key_childs_exist('key4', $array));
+        $this->assertTrue(array_key_childs_exist('key4.b.c', $array));
+        $this->assertFalse(array_key_childs_exist('key4.b.c.x', $array));
+    }
 }

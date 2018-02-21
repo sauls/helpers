@@ -122,3 +122,8 @@ function array_diff_key(... $arrays): array
         $arrays
     );
 }
+
+function array_key_childs_exist($key, array $array): bool
+{
+    return false !== strpos(\implode(',', array_keys($array)), $key.'.');
+}
