@@ -42,5 +42,10 @@
       "Sauls\\Component\\Helper\\": "tests/"
     }
   },
-  "minimum-stability": "dev"
+  "minimum-stability": "dev",
+  "extra": {
+    "branch-alias": {
+      "dev-master": "v1.x-dev"
+    }
+  }
 }
