@@ -20,7 +20,7 @@ class CryptTest extends TestCase
     /**
      * @test
      */
-    public function should_encode_and_decode_data()
+    public function should_encode_and_decode_data(): void
     {
 
         $data = [
@@ -43,11 +43,8 @@ class CryptTest extends TestCase
 
     /**
      * @test
-     *
-     * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
-     * @throws \Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException
      */
-    public function should_fail_to_decode_data_with_wrong_key()
+    public function should_fail_to_decode_data_with_wrong_key(): void
     {
         $this->expectException(WrongKeyOrModifiedCiphertextException::class);
 
@@ -60,10 +57,8 @@ class CryptTest extends TestCase
 
     /**
      * @test
-     * @throws \Defuse\Crypto\Exception\EnvironmentIsBrokenException
-     * @throws WrongKeyOrModifiedCiphertextException
      */
-    public function should_fail_to_decode_data_with_modified_cypher_text()
+    public function should_fail_to_decode_data_with_modified_cypher_text(): void
     {
         $this->expectException(WrongKeyOrModifiedCiphertextException::class);
         $data = "test data";

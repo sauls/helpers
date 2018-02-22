@@ -32,7 +32,7 @@ $ composer require sauls/helpers
 
 | Group | Functions |
 |:--:|:---------:|
-| **array** | `array_merge, array_get_value, array_set_value, array_remove_key, array_key_exists, array_remove_value, array_deep_search, array_flatten, array_multiple_keys_exists, array_keys, array_keys_with_value, array_diff_key` |
+| **array** | `array_merge, array_get_value, array_set_value, array_remove_key, array_key_exists, array_remove_value, array_deep_search, array_flatten, array_multiple_keys_exists, array_keys, array_keys_with_value, array_diff_key, array_key_childs_exist` |
 | **class** | `class_traits, class_uses_trait` |
 | **crypt** | `data_encrypt, data_decrypt` |
 | **datetime** | `elapsed_time, countdown` |

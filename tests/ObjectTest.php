@@ -21,10 +21,8 @@ class ObjectTest extends TestCase
 {
     /**
      * @test
-     *
-     * @throws Exception\PropertyNotAccessibleException
      */
-    public function should_define_object_with_given_properties()
+    public function should_define_object_with_given_properties(): void
     {
         $dummyObject = define_object(new DummyObject(), [
             'property1' => 'vvv',
@@ -39,9 +37,8 @@ class ObjectTest extends TestCase
 
     /**
      * @test
-     * @throws PropertyNotAccessibleException
      */
-    public function should_throw_property_not_accessible_exception_when_configuring_object()
+    public function should_throw_property_not_accessible_exception_when_configuring_object(): void
     {
         $this->expectException(PropertyNotAccessibleException::class);
 
@@ -51,10 +48,9 @@ class ObjectTest extends TestCase
     }
 
     /**
-     * @testR
-     * @throws PropertyNotAccessibleException
+     * @test
      */
-    public function should_get_object_property_value()
+    public function should_get_object_property_value(): void
     {
         $dummyObject = new DummyObject();
         $dummyObject->property2 = 'This is test';
@@ -64,9 +60,8 @@ class ObjectTest extends TestCase
 
     /**
      * @test
-     * @throws PropertyNotAccessibleException
      */
-    public function should_throw_property_not_accessible_exception_when_trying_to_get_non_existent_property()
+    public function should_throw_property_not_accessible_exception_when_trying_to_get_non_existent_property(): void
     {
         $this->expectException(PropertyNotAccessibleException::class);
         $dummyObject = new DummyObject();
@@ -75,9 +70,8 @@ class ObjectTest extends TestCase
 
     /**
      * @test
-     * @throws Exception\ClassPropertyNotSetException
      */
-    public function should_set_object_property_value()
+    public function should_set_object_property_value(): void
     {
         $dummyObject = new DummyObject();
 
@@ -92,9 +86,8 @@ class ObjectTest extends TestCase
 
     /**
      * @test
-     * @throws ClassPropertyNotSetException
      */
-    public function should_throw_class_property_not_set_exception_when_setting_non_existent_property()
+    public function should_throw_class_property_not_set_exception_when_setting_non_existent_property(): void
     {
         $this->expectException(ClassPropertyNotSetException::class);
 

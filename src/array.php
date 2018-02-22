@@ -122,3 +122,8 @@ function array_diff_key(... $arrays): array
         $arrays
     );
 }
+
+function array_key_childs_exist($key, array $array): bool
+{
+    return OperationFactory::create(ArrayOperation\KeyChildsExist::class)->execute($key, $array);
+}
