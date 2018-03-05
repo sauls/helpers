@@ -13,6 +13,8 @@
 namespace Sauls\Component\Helper;
 
 use PHPUnit\Framework\TestCase;
+use Sauls\Component\Helper\Operation\Factory\OperationFactory;
+use Sauls\Component\Helper\Operation\StringOperation;
 
 class StringTest extends TestCase
 {
@@ -119,5 +121,163 @@ class StringTest extends TestCase
                 ],
             ],
         ];
+    }
+
+    /**
+     * @test
+     * @dataProvider getCountWordsData
+     */
+    public function should_count_words_in_given_string(int $expected, string $value): void
+    {
+        $this->assertEquals($expected, count_words($value));
+    }
+
+    public function getCountWordsData(): array
+    {
+        return [
+            [1, 'Word'],
+            [2, 'Hello world'],
+            [6, 'One two three four five six'],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider getCountSentencesData
+     */
+    public function should_count_sentences_in_given_string(int $expected, string $value): void
+    {
+        $this->assertEquals($expected, count_sentences($value));
+    }
+
+    public function getCountSentencesData(): array
+    {
+        return [
+            [1, 'Hello world.'],
+            [2, 'Hello world. And welcome to Html!']
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider getTruncateData
+     */
+    public function should_truncate_given_strings(string $expected, string $value, int $length, string $suffix): void
+    {
+        $this->assertSame($expected, truncate($value, $length, $suffix));
+    }
+
+    public function getTruncateData(): array
+    {
+        return [
+            ['Lore...', 'Lore ipsum dollar nipsum', 4, '...'],
+            ['Lore ipsum...', 'Lore ipsum dollar nipsum', 10, '...'],
+            ['Lore morole šipsūm', 'Lore morole šipsūm dobolar mologar', 18, ''],
+            ['Lore', 'Lore', 20, ''],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider getTruncateWordsData
+     */
+    public function should_truncate_given_strings_by_words(string $expected, string $value, int $count, string $suffix): void
+    {
+        $this->assertSame($expected, truncate_words($value, $count, $suffix));
+    }
+
+    public function getTruncateWordsData(): array
+    {
+        return [
+            ['Lore...', 'Lore ipsum dollar molar', 1, '...'],
+            ['Lore ipsum...', 'Lore ipsum dollar molar', 2, '...'],
+            ['Šarka tupi ant šakos ir valgo', 'Šarka tupi ant šakos ir valgo savo vaikų sriubą', 6, ''],
+            ['Hello world!', 'Hello world!', 5, '']
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider getTruncateSentencesData
+     */
+    public function should_truncate_given_sentences(string $expected, string $value, int $count, string $suffix): void
+    {
+        $this->assertSame($expected, truncate_sentences($value, $count, $suffix));
+    }
+
+    public function getTruncateSentencesData(): array
+    {
+        return [
+            ['Sentence one.', 'Sentence one. Sentence two. Sentence Three. Sentence four.', 1, ''],
+            ['Sentence one. Sentence two.', 'Sentence one. Sentence two. Sentence Three. Sentence four.', 2, ''],
+            ['Sentence one. Sentence two. Sentence Three.', 'Sentence one. Sentence two. Sentence Three. Sentence four.', 3, ''],
+            ['Sentence one. Sentence two. Sentence Three. Sentence four.', 'Sentence one. Sentence two. Sentence Three. Sentence four.', 4, ''],
+            ['Sentence one. Sentence two. Sentence Three. Sentence four.', 'Sentence one. Sentence two. Sentence Three. Sentence four.', 5, ''],
+            ['Šiaudas. Ūpėtakis...', 'Šiaudas. Ūpėtakis. Žuvis. Žolė', 2, '..'],
+            ['Sentence1. Sentence2.', "Sentence1. \n Sentence2. \n\n\n\n Sentence3", 2, '']
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider getTruncateHtmlData
+     */
+    public function should_truncate_html_from_given_string(string $excpected, string $value, int $length, string $suffix): void
+    {
+        $this->assertSame($excpected, truncate_html($value, $length, $suffix));
+    }
+
+    public function getTruncateHtmlData()
+    {
+        return [
+            ['<p>He</p>', '<p>Hello world form HTML.</p>', 2, '']
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider getTruncateHtmlWordsData
+     */
+    public function should_truncate_html_words_from_given_string(string $excpected, string $value, int $length, string $suffix): void
+    {
+        $this->assertSame($excpected, truncate_html_worlds($value, $length, $suffix));
+    }
+
+    public function getTruncateHtmlWordsData()
+    {
+        return [
+            ['<p>Hello world</p>', '<p>Hello world form HTML.</p>', 2, '']
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider getTruncateHtmlSentencesData
+     */
+    public function should_truncate_html_sentences_from_given_string(string $excpected, string $value, int $length, string $suffix): void
+    {
+        $this->assertSame($excpected, truncate_html_sentences($value, $length, $suffix));
+    }
+
+    public function getTruncateHtmlSentencesData()
+    {
+        return [
+            ['<p>Hello world. Saying from HTML.</p><p>Yes it is working.</p>', '<p>Hello world. Saying from HTML.</p><p>Yes it is working. But as you can see.</p>', 3, ''],
+            ['<h1>List of items</h1><ul><li>One</li></ul>', '<h1>List of items</h1><ul><li>One</li><li>Two</li></ul>', 2, ''],
+            ['<p><img src="#" /></p><ul><li>A</li></ul>', '<p><img src="#" /></p><ul><li>A</li><li>b</li></ul>', 1, '']
+        ];
+    }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage `notvalid` truncate operation method is not supported.
+     */
+    public function should_trow_exception_if_wrong_truncate_method_given()
+    {
+        $truncateOperation = OperationFactory::create(StringOperation\TruncateHtml::class);
+        $truncateOperation->setTruncateOperationMethod('notvalid');
+
+        $truncateOperation->execute('Simple string', 1, '');
     }
 }

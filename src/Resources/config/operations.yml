@@ -74,6 +74,18 @@ services:
   Sauls\Component\Helper\Operation\StringOperation\Base64UrlEncodeInterface: '@Sauls\Component\Helper\Operation\StringOperation\Base64UrlEncode'
   Sauls\Component\Helper\Operation\StringOperation\Base64Decode: ~
   Sauls\Component\Helper\Operation\StringOperation\Base64DecodeInterface: '@Sauls\Component\Helper\Operation\StringOperation\Base64Decode'
+  Sauls\Component\Helper\Operation\StringOperation\CountWords: ~
+  Sauls\Component\Helper\Operation\StringOperation\CountWordsInterface: '@Sauls\Component\Helper\Operation\StringOperation\CountWords'
+  Sauls\Component\Helper\Operation\StringOperation\CountSentences: ~
+  Sauls\Component\Helper\Operation\StringOperation\CountSentencesInterface: '@Sauls\Component\Helper\Operation\StringOperation\CountSentences'
+  Sauls\Component\Helper\Operation\StringOperation\Truncate: ~
+  Sauls\Component\Helper\Operation\StringOperation\TruncateInterface: '@Sauls\Component\Helper\Operation\StringOperation\Truncate'
+  Sauls\Component\Helper\Operation\StringOperation\TruncateWords: ~
+  Sauls\Component\Helper\Operation\StringOperation\TruncateWordsInterface: '@Sauls\Component\Helper\Operation\StringOperation\TruncateWords'
+  Sauls\Component\Helper\Operation\StringOperation\TruncateSentences: ~
+  Sauls\Component\Helper\Operation\StringOperation\TruncateSentencesInterface: '@Sauls\Component\Helper\Operation\StringOperation\TruncateSentences'
+  Sauls\Component\Helper\Operation\StringOperation\TruncateHtml: ~
+  Sauls\Component\Helper\Operation\StringOperation\TruncateHtmlInterface: '@Sauls\Component\Helper\Operation\StringOperation\TruncateHtml'
   #
   # Crypt operations
   #

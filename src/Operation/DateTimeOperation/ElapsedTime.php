@@ -81,6 +81,7 @@ class ElapsedTime extends AbstractOperation implements ElapsedTimeInterface
 
         foreach ($this->timeOffsets as [$timeSingle, $timePlural, $offset]) {
             if ($timeDifference >= $offset) {
+
                 $timeLeft = floor($timeDifference / $offset);
                 $timeDifference -= ($timeLeft * $offset);
                 $timeLeftValues[] = $this->formatLabel((int)$timeLeft, $elapsedTimeLabels, [
