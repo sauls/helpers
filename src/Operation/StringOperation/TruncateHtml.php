@@ -78,47 +78,6 @@ class TruncateHtml implements TruncateHtmlInterface
         return $generator->generateFromTokens($this->truncated).($this->totalCount >= $length ? $suffix : '');
     }
 
-    private function truncateByMethod(string &$value, int $length, string $suffix): int
-    {
-        return $this->{$this->truncateOperationMethod}($value, $length, $suffix);
-    }
-
-    /**
-     * @param string $truncateOperationMethod
-     *
-     * @return TruncateHtml
-     */
-    public function setTruncateOperationMethod(string $truncateOperationMethod): void
-    {
-        if (!in_array($truncateOperationMethod, $this->truncateOperationMethods)) {
-            throw new \InvalidArgumentException(\sprintf('`%s` truncate operation method is not supported.',
-                $truncateOperationMethod));
-        }
-
-        $this->truncateOperationMethod = $truncateOperationMethod;
-    }
-
-    private function truncate(string &$value, int $length, string $suffix): int
-    {
-        $value = $this->truncateOperation->execute($value, $length, $suffix);
-
-        return \mb_strlen($value, $this->encoding);
-    }
-
-    private function truncateWords(string &$value, int $count, string $suffix): int
-    {
-        $value = $this->truncateWordsOperation->execute($value, $count, $suffix);
-
-        return $this->countWordsOperation->execute($value);
-    }
-
-    private function truncateSentences(string &$value, int $count, string $suffix): int
-    {
-        $value = $this->truncateSentencesOperation->execute($value, $count, $suffix);
-
-        return $this->countSentencesOperation->execute($value);
-    }
-
     private function resetVariables(): void
     {
         $this->openTokens = [];
@@ -161,6 +120,11 @@ class TruncateHtml implements TruncateHtmlInterface
         }
     }
 
+    private function truncateByMethod(string &$value, int $length, string $suffix): int
+    {
+        return $this->{$this->truncateOperationMethod}($value, $length, $suffix);
+    }
+
     private function processTokenEnd($token): void
     {
         if ($token instanceof \HTMLPurifier_Token_End) {
@@ -187,6 +151,42 @@ class TruncateHtml implements TruncateHtmlInterface
                 $this->truncated[] = new \HTMLPurifier_Token_End($name);
             }
         }
+    }
+
+    /**
+     * @param string $truncateOperationMethod
+     *
+     * @return TruncateHtml
+     */
+    public function setTruncateOperationMethod(string $truncateOperationMethod): void
+    {
+        if (!in_array($truncateOperationMethod, $this->truncateOperationMethods)) {
+            throw new \InvalidArgumentException(\sprintf('`%s` truncate operation method is not supported.',
+                $truncateOperationMethod));
+        }
+
+        $this->truncateOperationMethod = $truncateOperationMethod;
+    }
+
+    private function truncate(string &$value, int $length, string $suffix): int
+    {
+        $value = $this->truncateOperation->execute($value, $length, $suffix);
+
+        return \mb_strlen($value, $this->encoding);
+    }
+
+    private function truncateWords(string &$value, int $count, string $suffix): int
+    {
+        $value = $this->truncateWordsOperation->execute($value, $count, $suffix);
+
+        return $this->countWordsOperation->execute($value);
+    }
+
+    private function truncateSentences(string &$value, int $count, string $suffix): int
+    {
+        $value = $this->truncateSentencesOperation->execute($value, $count, $suffix);
+
+        return $this->countSentencesOperation->execute($value);
     }
 
 
