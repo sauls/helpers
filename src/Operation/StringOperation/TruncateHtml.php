@@ -20,7 +20,9 @@ class TruncateHtml implements TruncateHtmlInterface
     private $truncateOperationMethod = 'truncate';
 
     private $truncateOperationMethods = [
-        self::TRUNCATE_HTML_LETTER, self::TRUNCATE_HTML_WORD, self::TRUNCATE_HTML_SENTENCE
+        self::TRUNCATE_HTML_LETTER,
+        self::TRUNCATE_HTML_WORD,
+        self::TRUNCATE_HTML_SENTENCE,
     ];
 
     private $encoding = 'utf-8';
@@ -36,6 +38,14 @@ class TruncateHtml implements TruncateHtmlInterface
      * @var CountSentencesInterface
      */
     private $countSentencesOperation;
+
+    private $openTokens = [];
+
+    private $totalCount = 0;
+
+    private $depth = 0;
+
+    private $truncated = [];
 
     public function __construct(
         TruncateInterface $truncateOperation,
@@ -53,53 +63,109 @@ class TruncateHtml implements TruncateHtmlInterface
 
     public function execute(string $value, int $length, string $suffix = '...'): string
     {
+        $this->resetVariables();
+
         $config = \HTMLPurifier_Config::create(null);
 
         $lexer = \HTMLPurifier_Lexer::create($config);
         $tokens = $lexer->tokenizeHTML($value, $config, new \HTMLPurifier_Context());
-        $openTokens = [];
-        $totalCount = 0;
-        $depth = 0;
-        $truncated = [];
-        foreach ($tokens as $token) {
-            if ($token instanceof \HTMLPurifier_Token_Start) {
-                $openTokens[$depth] = $token->name;
-                $truncated[] = $token;
-                ++$depth;
-            } elseif ($token instanceof \HTMLPurifier_Token_Text && $totalCount <= $length) {
 
-                $currentLength = $this->truncateByMethod($token->data, $length - $totalCount, $suffix);
+        $this->processTokens($tokens, $length, $suffix);
 
-                $totalCount += $currentLength;
-                $truncated[] = $token;
-            } elseif ($token instanceof \HTMLPurifier_Token_End) {
-                if ($token->name === $openTokens[$depth - 1]) {
-                    --$depth;
-                    unset($openTokens[$depth]);
-                    $truncated[] = $token;
-                }
-            } elseif ($token instanceof \HTMLPurifier_Token_Empty) {
-                $truncated[] = $token;
-            }
-            if ($totalCount >= $length) {
-                if (0 < \count($openTokens)) {
-                    \krsort($openTokens);
-                    foreach ($openTokens as $name) {
-                        $truncated[] = new \HTMLPurifier_Token_End($name);
-                    }
-                }
-                break;
-            }
-        }
         $context = new \HTMLPurifier_Context();
         $generator = new \HTMLPurifier_Generator($config, $context);
 
-        return $generator->generateFromTokens($truncated).($totalCount >= $length ? $suffix : '');
+        return $generator->generateFromTokens($this->truncated).($this->totalCount >= $length ? $suffix : '');
+    }
+
+    private function resetVariables(): void
+    {
+        $this->openTokens = [];
+        $this->depth = 0;
+        $this->totalCount = 0;
+        $this->truncated = [];
+    }
+
+    private function processTokens(array $tokens, int $length, string $suffix): void
+    {
+        foreach ($tokens as $token) {
+
+            $this->processTokenStart($token);
+            $this->processTokenText($token, $length, $suffix);
+            $this->processTokenEnd($token);
+            $this->processTokenEmpty($token);
+
+            if ($this->totalCount >= $length) {
+                $this->processOpenTokens();
+                break;
+            }
+        }
+    }
+
+    private function processTokenStart($token): void
+    {
+        if ($token instanceof \HTMLPurifier_Token_Start) {
+            $this->openTokens[$this->depth] = $token->name;
+            $this->truncated[] = $token;
+            ++$this->depth;
+        }
+    }
+
+    private function processTokenText($token, int $length, string $suffix): void
+    {
+        if ($token instanceof \HTMLPurifier_Token_Text && $this->totalCount <= $length) {
+            $currentLength = $this->truncateByMethod($token->data, $length - $this->totalCount, $suffix);
+            $this->totalCount += $currentLength;
+            $this->truncated[] = $token;
+        }
     }
 
     private function truncateByMethod(string &$value, int $length, string $suffix): int
     {
         return $this->{$this->truncateOperationMethod}($value, $length, $suffix);
+    }
+
+    private function processTokenEnd($token): void
+    {
+        if ($token instanceof \HTMLPurifier_Token_End) {
+            if ($token->name === $this->openTokens[$this->depth - 1]) {
+                --$this->depth;
+                unset($this->openTokens[$this->depth]);
+                $this->truncated[] = $token;
+            }
+        }
+    }
+
+    private function processTokenEmpty($token)
+    {
+        if ($token instanceof \HTMLPurifier_Token_Empty) {
+            $this->truncated[] = $token;
+        }
+    }
+
+    private function processOpenTokens(): void
+    {
+        if (0 < \count($this->openTokens)) {
+            \krsort($this->openTokens);
+            foreach ($this->openTokens as $name) {
+                $this->truncated[] = new \HTMLPurifier_Token_End($name);
+            }
+        }
+    }
+
+    /**
+     * @param string $truncateOperationMethod
+     *
+     * @return TruncateHtml
+     */
+    public function setTruncateOperationMethod(string $truncateOperationMethod): void
+    {
+        if (!in_array($truncateOperationMethod, $this->truncateOperationMethods)) {
+            throw new \InvalidArgumentException(\sprintf('`%s` truncate operation method is not supported.',
+                $truncateOperationMethod));
+        }
+
+        $this->truncateOperationMethod = $truncateOperationMethod;
     }
 
     private function truncate(string &$value, int $length, string $suffix): int
@@ -119,21 +185,8 @@ class TruncateHtml implements TruncateHtmlInterface
     private function truncateSentences(string &$value, int $count, string $suffix): int
     {
         $value = $this->truncateSentencesOperation->execute($value, $count, $suffix);
+
         return $this->countSentencesOperation->execute($value);
-    }
-
-    /**
-     * @param string $truncateOperationMethod
-     *
-     * @return TruncateHtml
-     */
-    public function setTruncateOperationMethod(string $truncateOperationMethod): void
-    {
-        if (!in_array($truncateOperationMethod, $this->truncateOperationMethods)) {
-            throw new \InvalidArgumentException(\sprintf('`%s` truncate operation method is not supported.', $truncateOperationMethod));
-        }
-
-        $this->truncateOperationMethod = $truncateOperationMethod;
     }
 
 
