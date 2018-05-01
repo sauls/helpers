@@ -273,11 +273,29 @@ class StringTest extends TestCase
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage `notvalid` truncate operation method is not supported.
      */
-    public function should_trow_exception_if_wrong_truncate_method_given()
+    public function should_trow_exception_if_wrong_truncate_method_given(): void
     {
         $truncateOperation = OperationFactory::create(StringOperation\TruncateHtml::class);
         $truncateOperation->setTruncateOperationMethod('notvalid');
 
         $truncateOperation->execute('Simple string', 1, '');
+    }
+
+    /**
+     * @test
+     */
+    public function should_contain_given_string(): void
+    {
+        $stringInOperation = OperationFactory::create(StringOperation\StringIn::class);
+
+        $this->assertTrue(string_in('test', ['test_']));
+    }
+
+    /**
+     * @test
+     */
+    public function should_not_contain_given_string(): void
+    {
+        $this->assertFalse(string_in('test_', ['test']));
     }
 }

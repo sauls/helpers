@@ -101,3 +101,8 @@ function truncate_html_sentences(string $value, int $count, string $suffix = '..
     return $truncateOperation->execute($value, $count, $suffix);
 }
 
+function string_in(string $value, array $values): bool
+{
+    return OperationFactory::create(StringOperation\StringIn::class)->execute($value, $values);
+}
+
