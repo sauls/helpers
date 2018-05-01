@@ -58,16 +58,16 @@ class DateTimeTest extends TestCase
         $now = new \DateTime();
 
         return [
-            [(clone $now)->modify('-3 month -1 hour -29 minutes -26 seconds')->format('Y-m-d H:i:s'), '3mo'],
-            [(new \DateTime())->modify('-7 second'), 's'],
-            [(new \DateTime())->modify('-1 second'), 's'],
-            [(new \DateTime())->modify('-7 minute'), 'm'],
-            [(new \DateTime())->modify('-1 hour'), 'h'],
-            [(new \DateTime())->modify('-7 days'), 'w'],
-            [(new \DateTime())->modify('-7 days'), 'savaite', ['singular' => ['{week}' => 'savaite']]],
-            [(new \DateTime())->modify('-1 day'), 'd'],
-            [(new \DateTime())->modify('-7 days'), 'w'],
-            [(new \DateTime())->modify('-1 year'), 'mo'],
+            [(clone $now)->modify('-3 month -1 day')->format('Y-m-d H:i:s'), '3mo'],
+            [(clone $now)->modify('-7 second'), 's'],
+            [(clone $now)->modify('-1 second'), 's'],
+            [(clone $now)->modify('-7 minute'), 'm'],
+            [(clone $now)->modify('-1 hour'), 'h'],
+            [(clone $now)->modify('-7 days'), 'w'],
+            [(clone $now)->modify('-7 days'), 'savaite', ['singular' => ['{week}' => 'savaite']]],
+            [(clone $now)->modify('-1 day'), 'd'],
+            [(clone $now)->modify('-7 days'), 'w'],
+            [(clone $now)->modify('-1 year'), 'mo'],
         ];
     }
 
@@ -88,16 +88,16 @@ class DateTimeTest extends TestCase
         $now = new \DateTime();
 
         return [
-            [(clone $now)->modify('-3 month -1 hour')->format('Y-m-d H:i:s'), '3mo 1h'],
-            [(new \DateTime())->modify('-1 year -1 month'), 'yr'],
-            [(new \DateTime())->modify('-1 year -1 month'), 'years', ['singular' => ['{year}' => 'years']]],
+            [(clone $now)->modify('-3 month -1 day')->format('Y-m-d H:i:s'), '3mo'],
+            [(clone $now)->modify('-1 year -1 month'), 'yr'],
+            [(clone $now)->modify('-1 year -1 month'), 'years', ['singular' => ['{year}' => 'years']]],
             [
-                (new \DateTime())->modify('-1 year -1 month'),
+                (clone $now)->modify('-1 year -1 month'),
                 '18valandu',
                 ['singular' => ['{year}' => 'metai', '{month}' => 'menesis'], 'plural' => ['{hours}' => 'valandu']],
             ],
             [
-                (new \DateTime())->modify('-1 year -1 month'),
+                (clone $now)->modify('-1 year -1 month'),
                 '1metai',
                 ['singular' => ['{year}' => 'metai', '{month}' => 'menesis'], 'plural' => ['{hours}' => 'valandu']],
             ]

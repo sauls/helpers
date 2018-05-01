@@ -86,6 +86,8 @@ services:
   Sauls\Component\Helper\Operation\StringOperation\TruncateSentencesInterface: '@Sauls\Component\Helper\Operation\StringOperation\TruncateSentences'
   Sauls\Component\Helper\Operation\StringOperation\TruncateHtml: ~
   Sauls\Component\Helper\Operation\StringOperation\TruncateHtmlInterface: '@Sauls\Component\Helper\Operation\StringOperation\TruncateHtml'
+  Sauls\Component\Helper\Operation\StringOperation\StringIn: ~
+  Sauls\Component\Helper\Operation\StringOperation\StringInInterface: '@Sauls\Component\Helper\Operation\StringOperation\StringIn'
   #
   # Crypt operations
   #
