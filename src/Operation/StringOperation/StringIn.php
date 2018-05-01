@@ -17,7 +17,7 @@ class StringIn implements StringInInterface
     public function execute(string $value, array $values): bool
     {
         foreach ($values as $checkValue) {
-            if (false !== stripos($checkValue, $value)) {
+            if (false !== \stripos($checkValue, $value)) {
                 return true;
             }
         }
