@@ -12,16 +12,16 @@
 
 namespace Sauls\Component\Helper\Operation\ObjectOperation;
 
-use Sauls\Component\Helper\Operation\ClassOperation\FqcnInterface as ClassFqcnInterface;
+use Sauls\Component\Helper\Operation\ClassOperation\UfqcnInterface as ClassUfqcnInterface;
 
-class Fqcn implements FqcnInterface
+class Ufqcn implements UfqcnInterface
 {
     /**
      * @var ClassFqcnInterface
      */
     private $classFcqn;
 
-    public function __construct(ClassFqcnInterface $classFcqn)
+    public function __construct(ClassUfqcnInterface $classFcqn)
     {
         $this->classFcqn = $classFcqn;
     }

@@ -14,7 +14,7 @@ namespace Sauls\Component\Helper\Operation\ObjectOperation;
 
 use Sauls\Component\Helper\Operation\Operation;
 
-interface FqcnInterface extends Operation
+interface UfqcnInterface extends Operation
 {
     public function execute(object $value): string;
 }

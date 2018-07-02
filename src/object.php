@@ -41,7 +41,7 @@ function set_object_property_value(object $object, string $property, $value): vo
     (new ObjectOperation\SetPropertyValue)->execute($object, $property, $value);
 }
 
-function object_fqcn(object $value): string
+function object_ufqcn(object $value): string
 {
-    return OperationFactory::create(ObjectOperation\Fqcn::class)->execute($value);
+    return OperationFactory::create(ObjectOperation\Ufqcn::class)->execute($value);
 }
