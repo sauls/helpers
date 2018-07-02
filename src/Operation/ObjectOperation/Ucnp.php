@@ -12,22 +12,23 @@
 
 namespace Sauls\Component\Helper\Operation\ObjectOperation;
 
-use Sauls\Component\Helper\Operation\ClassOperation\UcnpInterface as ClassUfqcnInterface;
+use Sauls\Component\Helper\Operation\ClassOperation\UcnpInterface as ClassOperationUcpnInterface;
 
 class Ucnp implements UcnpInterface
 {
     /**
-     * @var ClassFqcnInterface
+     * @var ClassOperationUcpnInterface
      */
-    private $classFcqn;
+    private $classUcpn;
 
-    public function __construct(ClassUfqcnInterface $classFcqn)
+    public function __construct(ClassOperationUcpnInterface $classUcpn)
     {
-        $this->classFcqn = $classFcqn;
+
+        $this->classUcpn = $classUcpn;
     }
 
     public function execute(object $value): string
     {
-        return $this->classFcqn->execute(\get_class($value));
+        return $this->classUcpn->execute(\get_class($value));
     }
 }
