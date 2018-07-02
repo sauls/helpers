@@ -100,9 +100,9 @@ class ObjectTest extends TestCase
      * @test
      * @dataProvider getObjectFqcnData
      */
-    public function should_return_object_ufqcn(string $expected, object $object): void
+    public function should_return_object_ucnp(string $expected, object $object): void
     {
-        $this->assertEquals($expected, object_ucn($object));
+        $this->assertEquals($expected, object_ucnp($object));
     }
 
     public function getObjectFqcnData(): array

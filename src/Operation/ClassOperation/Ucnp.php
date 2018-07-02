@@ -12,9 +12,16 @@
 
 namespace Sauls\Component\Helper\Operation\ClassOperation;
 
-use Sauls\Component\Helper\Operation\Operation;
-
-interface UcnInterface extends Operation
+class Ucnp implements UcnpInterface
 {
-    public function execute(string $value): string;
+    public function execute(string $value): string
+    {
+        preg_match('~([^\\\\]+?)?$~i', $value, $matches);
+
+        return strtolower(preg_replace(
+            ['/([A-Z]+)([A-Z][a-z])/', '/([a-z\d])([A-Z])/'],
+            ['\\1_\\2', '\\1_\\2'],
+            $matches[1]
+        ));
+    }
 }

@@ -49,9 +49,9 @@ class ClassTest extends TestCase
      * @test
      * @dataProvider getClassFqcnData
      */
-    public function should_return_class_ufqcn(string $expected, string $class): void
+    public function should_return_class_ucnp(string $expected, string $class): void
     {
-        $this->assertEquals($expected, class_ucn($class));
+        $this->assertEquals($expected, class_ucnp($class));
     }
 
     public function getClassFqcnData(): array

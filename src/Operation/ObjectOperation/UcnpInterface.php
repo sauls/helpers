@@ -14,7 +14,7 @@ namespace Sauls\Component\Helper\Operation\ObjectOperation;
 
 use Sauls\Component\Helper\Operation\Operation;
 
-interface UcnInterface extends Operation
+interface UcnpInterface extends Operation
 {
     public function execute(object $value): string;
 }

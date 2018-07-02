@@ -12,9 +12,9 @@
 
 namespace Sauls\Component\Helper\Operation\ObjectOperation;
 
-use Sauls\Component\Helper\Operation\ClassOperation\UcnInterface as ClassUfqcnInterface;
+use Sauls\Component\Helper\Operation\ClassOperation\UcnpInterface as ClassUfqcnInterface;
 
-class Ucn implements UcnInterface
+class Ucnp implements UcnpInterface
 {
     /**
      * @var ClassFqcnInterface
