@@ -33,11 +33,11 @@ $ composer require sauls/helpers
 | Group | Functions |
 |:--:|:---------:|
 | **array** | `array_merge, array_get_value, array_set_value, array_remove_key, array_key_exists, array_remove_value, array_deep_search, array_flatten, array_multiple_keys_exists, array_keys, array_keys_with_value, array_diff_key, array_key_childs_exist` |
-| **class** | `class_traits, class_uses_trait, class_fqcn` |
+| **class** | `class_traits, class_uses_trait, class_ucnp` |
 | **crypt** | `data_encrypt, data_decrypt` |
 | **datetime** | `elapsed_time, countdown` |
 | **filesystem** | `rrmdir` |
-| **object** | `define_object, get_object_property_value, set_object_property_value, object_fqcn` |
+| **object** | `define_object, get_object_property_value, set_object_property_value, object_ucnp` |
 | **string** | `string_camelize, string_snakeify, explode_using_multi_delimiters, base64_url_encode, base64_url_decode, truncate, truncate_words, truncate_sentences, truncate_html, truncate_html_words, truncate_html_sentences, count_words, count_sentences, string_in` |
 | **type**| `convert_to, register_converters` |
 

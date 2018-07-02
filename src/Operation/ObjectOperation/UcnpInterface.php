@@ -10,11 +10,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Sauls\Component\Helper\Operation\ClassOperation;
+namespace Sauls\Component\Helper\Operation\ObjectOperation;
 
 use Sauls\Component\Helper\Operation\Operation;
 
-interface FqcnInterface extends Operation
+interface UcnpInterface extends Operation
 {
-    public function execute(string $value): string;
+    public function execute(object $value): string;
 }
