@@ -102,7 +102,7 @@ class ObjectTest extends TestCase
      */
     public function should_return_object_ufqcn(string $expected, object $object): void
     {
-        $this->assertEquals($expected, object_ufqcn($object));
+        $this->assertEquals($expected, object_ucn($object));
     }
 
     public function getObjectFqcnData(): array

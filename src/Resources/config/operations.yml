@@ -54,8 +54,8 @@ services:
   Sauls\Component\Helper\Operation\ObjectOperation\GetPropertyValueInterface: '@Sauls\Component\Helper\Operation\ObjectOperation\GetPropertyValue'
   Sauls\Component\Helper\Operation\ObjectOperation\DefineObject: ~
   Sauls\Component\Helper\Operation\ObjectOperation\DefineObjectInterface: '@Sauls\Component\Helper\Operation\ObjectOperation\DefineObject'
-  Sauls\Component\Helper\Operation\ObjectOperation\Ufqcn: ~
-  Sauls\Component\Helper\Operation\ObjectOperation\UfqcnInterface: '@Sauls\Component\Helper\Operation\ObjectOperation\Ufqcn'
+  Sauls\Component\Helper\Operation\ObjectOperation\Ucn: ~
+  Sauls\Component\Helper\Operation\ObjectOperation\UcnInterface: '@Sauls\Component\Helper\Operation\ObjectOperation\Ucn'
 
   #
   # Class operations
@@ -64,8 +64,8 @@ services:
   Sauls\Component\Helper\Operation\ClassOperation\TraitsInterface: '@Sauls\Component\Helper\Operation\ClassOperation\Traits'
   Sauls\Component\Helper\Operation\ClassOperation\UsesTrait: ~
   Sauls\Component\Helper\Operation\ClassOperation\UsesTraitInterface: '@Sauls\Component\Helper\Operation\ClassOperation\UsesTrait'
-  Sauls\Component\Helper\Operation\ClassOperation\Ufqcn: ~
-  Sauls\Component\Helper\Operation\ClassOperation\UfqcnInterface: '@Sauls\Component\Helper\Operation\ClassOperation\Ufqcn'
+  Sauls\Component\Helper\Operation\ClassOperation\Ucn: ~
+  Sauls\Component\Helper\Operation\ClassOperation\UcnInterface: '@Sauls\Component\Helper\Operation\ClassOperation\Ucn'
   #
   # String operations
   #

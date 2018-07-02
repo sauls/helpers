@@ -12,7 +12,7 @@
 
 namespace Sauls\Component\Helper\Operation\ClassOperation;
 
-class Ufqcn implements UfqcnInterface
+class Ucn implements UcnInterface
 {
     public function execute(string $value): string
     {

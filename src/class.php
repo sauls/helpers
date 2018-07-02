@@ -25,7 +25,7 @@ function class_uses_trait(string $class, string $traitClass): bool
     return OperationFactory::create(ClassOperation\UsesTrait::class)->execute($class, $traitClass);
 }
 
-function class_ufqcn(string $class): string
+function class_ucn(string $class): string
 {
-    return OperationFactory::create(ClassOperation\Ufqcn::class)->execute($class);
+    return OperationFactory::create(ClassOperation\Ucn::class)->execute($class);
 }
