@@ -43,7 +43,7 @@ class ObjectTest extends TestCase
         $this->expectException(PropertyNotAccessibleException::class);
 
         define_object(new DummyObject(), [
-           'secret' => 'Not so secret...',
+            'secret' => 'Not so secret...',
         ]);
     }
 
@@ -94,5 +94,22 @@ class ObjectTest extends TestCase
         $dummyObject = new DummyObject();
 
         set_object_property_value($dummyObject, 'varbiable22', 'Is it real?');
+    }
+
+    /**
+     * @test
+     * @dataProvider getObjectFqcnData
+     */
+    public function should_return_object_fqcn(string $expected, object $object): void
+    {
+        $this->assertEquals($expected, object_fqcn($object));
+    }
+
+    public function getObjectFqcnData(): array
+    {
+        return [
+            ['std_class', new \stdClass],
+            ['dummy_object', new DummyObject],
+        ];
     }
 }
