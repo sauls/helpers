@@ -24,3 +24,8 @@ function class_uses_trait(string $class, string $traitClass): bool
 {
     return OperationFactory::create(ClassOperation\UsesTrait::class)->execute($class, $traitClass);
 }
+
+function class_fqcn(string $class): string
+{
+    return OperationFactory::create(ClassOperation\Fqcn::class)->execute($class);
+}
