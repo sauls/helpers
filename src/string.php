@@ -106,3 +106,7 @@ function string_in(string $value, array $values): bool
     return OperationFactory::create(StringOperation\StringIn::class)->execute($value, $values);
 }
 
+function string_contains(string $value, array $values): bool
+{
+    return OperationFactory::create(StringOperation\StringContains::class)->execute($value, $values);
+}

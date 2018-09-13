@@ -93,6 +93,8 @@ services:
   Sauls\Component\Helper\Operation\StringOperation\TruncateHtmlInterface: '@Sauls\Component\Helper\Operation\StringOperation\TruncateHtml'
   Sauls\Component\Helper\Operation\StringOperation\StringIn: ~
   Sauls\Component\Helper\Operation\StringOperation\StringInInterface: '@Sauls\Component\Helper\Operation\StringOperation\StringIn'
+  Sauls\Component\Helper\Operation\StringOperation\StringContains: ~
+  Sauls\Component\Helper\Operation\StringOperation\StringContainsInterface: '@Sauls\Component\Helper\Operation\StringOperation\StringContains'
   #
   # Crypt operations
   #
