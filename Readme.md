@@ -38,6 +38,6 @@ $ composer require sauls/helpers
 | **datetime** | `elapsed_time, countdown` |
 | **filesystem** | `rrmdir` |
 | **object** | `define_object, get_object_property_value, set_object_property_value, object_ucnp` |
-| **string** | `string_camelize, string_snakeify, explode_using_multi_delimiters, base64_url_encode, base64_url_decode, truncate, truncate_words, truncate_sentences, truncate_html, truncate_html_words, truncate_html_sentences, count_words, count_sentences, string_in` |
+| **string** | `string_camelize, string_snakeify, explode_using_multi_delimiters, base64_url_encode, base64_url_decode, truncate, truncate_words, truncate_sentences, truncate_html, truncate_html_words, truncate_html_sentences, count_words, count_sentences, string_in, string_contains` |
 | **type**| `convert_to, register_converters` |
 
