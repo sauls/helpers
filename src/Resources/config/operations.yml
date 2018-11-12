@@ -44,6 +44,8 @@ services:
   Sauls\Component\Helper\Operation\ArrayOperation\DiffKeyInterface: '@Sauls\Component\Helper\Operation\ArrayOperation\DiffKey'
   Sauls\Component\Helper\Operation\ArrayOperation\KeyChildsExist: ~
   Sauls\Component\Helper\Operation\ArrayOperation\KeyChildsExistInterface: '@Sauls\Component\Helper\Operation\ArrayOperation\KeyChildsExist'
+  Sauls\Component\Helper\Operation\ArrayOperation\ToObject: ~
+  Sauls\Component\Helper\Operation\ArrayOperation\ToObjectInterface: '@Sauls\Component\Helper\Operation\ArrayOperation\ToObject'
 
   #
   # Object operations
@@ -56,6 +58,8 @@ services:
   Sauls\Component\Helper\Operation\ObjectOperation\DefineObjectInterface: '@Sauls\Component\Helper\Operation\ObjectOperation\DefineObject'
   Sauls\Component\Helper\Operation\ObjectOperation\Ucnp: ~
   Sauls\Component\Helper\Operation\ObjectOperation\UcnpInterface: '@Sauls\Component\Helper\Operation\ObjectOperation\Ucnp'
+  Sauls\Component\Helper\Operation\ObjectOperation\ToArray: ~
+  Sauls\Component\Helper\Operation\ObjectOperation\ToArrayInterface: '@Sauls\Component\Helper\Operation\ObjectOperation\ToArray'
 
   #
   # Class operations

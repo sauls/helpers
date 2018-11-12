@@ -45,3 +45,8 @@ function object_ucnp(object $value): string
 {
     return OperationFactory::create(ObjectOperation\Ucnp::class)->execute($value);
 }
+
+function object_to_array($object, array $properties = [], bool $recursive = true): array
+{
+    return OperationFactory::create(ObjectOperation\ToArray::class)->execute($object, $properties, $recursive);
+}
