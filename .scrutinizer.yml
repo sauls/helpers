@@ -6,20 +6,18 @@ build:
   nodes:
     php7.2:
       environment:
-          php: '7.2'
-      analysis:
-          project_setup:
-              override: true
-          tests:
-              override: [php-scrutinizer-run]
+        php: '7.2'
+      project_setup:
+        override: true
+      tests:
+        override: [php-scrutinizer-run]
     php7.3:
       environment:
         php: '7.3'
-      analysis:
-        project_setup:
-          override: true
-        tests:
-          override: [php-scrutinizer-run]
+      project_setup:
+        override: true
+      tests:
+        override: [php-scrutinizer-run]
 
 filter:
   paths: [src/*]
