@@ -12,13 +12,9 @@
 
 namespace Sauls\Component\Helper\Operation\ObjectOperation;
 
-use Sauls\Component\Helper\Exception\ClassPropertyNotSetException;
 use Sauls\Component\Helper\Operation\Operation;
 
-interface SetPropertyInterface extends Operation
+interface ToArrayInterface extends Operation
 {
-    /**
-     * @throws ClassPropertyNotSetException
-     */
-    public function execute(object $object, string $property, $value): void;
+    public function execute($object, array $properties = [], bool $recursive = true): array;
 }

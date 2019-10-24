@@ -112,4 +112,130 @@ class ObjectTest extends TestCase
             ['dummy_object', new DummyObject],
         ];
     }
+
+    /**
+     * @test
+     */
+    public function should_return_string_as_string_value_in_array(): void
+    {
+        $string = 'Hello World!';
+
+        $this->assertSame([$string], object_to_array($string));
+    }
+
+    public function should_return_int_as_int_value_in_array(): void
+    {
+        $int = 56;
+
+        $this->assertSame([$int], object_to_array($int));
+    }
+
+    /**
+     * @test
+     */
+    public function should_return_array_when_array_is_passed_as_object(): void
+    {
+        $array = [
+            'KeyA' => 'A',
+            'KeuB' => 11,
+            23 => 56
+        ];
+
+        $this->assertSame($array, object_to_array($array, [], false));
+    }
+
+    /**
+     * @test
+     */
+    public function should_return_array_when_array_is_passed_as_object_and_is_recursive(): void
+    {
+        $array = [
+            'KeyA' => 'A',
+            'KeuB' => 11,
+            'keyC' => [
+                'key' => 1,
+                'b' => 'value',
+            ],
+            23 => 56,
+        ];
+
+        $this->assertSame($array, object_to_array($array, [], true));
+    }
+
+    /**
+     * @test
+     */
+    public function should_return_array_of_given_object_without_properties_and_not_recursive(): void
+    {
+        $object = define_object(
+            new DummyObject,
+            [
+                'property1' => 24,
+                'property2' => 1,
+                'property3' => 'Test#X',
+                'text' => 'Hello world',
+            ]
+        );
+
+        $this->assertSame(
+            [
+                'property2' => 1,
+                'property3' => 'Test#X',
+                'text' => 'Hello world',
+            ],
+            object_to_array($object, [], false)
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function should_return_array_of_given_object_with_properties_and_not_recursive(): void
+    {
+        $object = define_object(
+            new DummyObject,
+            [
+                'property1' => 24,
+                'property2' => 1,
+                'property3' => 'Test#X',
+                'text' => 'Hello world',
+            ]
+        );
+
+        $this->assertSame(
+            [
+                'prop1' => 24,
+                'property2' => 1,
+                'txt' => 'Hello world',
+            ],
+            object_to_array($object, [DummyObject::class => ['prop1' => 'property1', 'property2', 'txt' => 'text']], false)
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function should_return_array_of_given_array_with_properties_and_recursive(): void
+    {
+        $array = [
+            'test' => 1,
+            'obj' => define_object(new DummyObject, ['property1' => 'private variable', 'text' => 'Lorem ipsum']),
+            'b3' => 'eleven',
+        ];
+
+        $this->assertSame([
+            'test' => 1,
+            'obj' => [
+                'p1' => 'private variable',
+                'text' => 'Lorem ipsum',
+            ],
+            'b3' => 'eleven',
+        ], object_to_array($array, [
+            DummyObject::class => [
+                'p1' => 'property1',
+                'text'
+            ]
+        ]));
+    }
+
 }

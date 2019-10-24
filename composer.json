@@ -11,12 +11,13 @@
   ],
   "require": {
     "php": ">=7.2",
-    "defuse/php-encryption": "^2.1",
-    "ezyang/htmlpurifier": "^4.9",
-    "symfony/dependency-injection": "^4.0"
+    "defuse/php-encryption": "^2.2",
+    "ezyang/htmlpurifier": "^4.11",
+    "symfony/dependency-injection": "^4.3",
+    "symfony/yaml": "^4.3"
   },
   "require-dev": {
-    "phpunit/phpunit": "^7.0",
+    "phpunit/phpunit": "^8.0",
     "php-coveralls/php-coveralls": "^2.0"
   },
   "autoload": {
@@ -42,7 +43,7 @@
       "Sauls\\Component\\Helper\\": "tests/"
     }
   },
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "extra": {
     "branch-alias": {
       "dev-master": "v1.x-dev"

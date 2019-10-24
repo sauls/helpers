@@ -14,7 +14,7 @@ namespace Sauls\Component\Helper\Operation\ObjectOperation;
 
 use Sauls\Component\Helper\Exception\ClassPropertyNotSetException;
 
-class SetPropertyValue extends AbstractOperation implements SetPropertyInterface
+class SetPropertyValue extends AbstractOperation implements SetPropertyValueInterface
 {
     /**
      * @throws ClassPropertyNotSetException
