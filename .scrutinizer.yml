@@ -3,24 +3,23 @@ checks:
     code_rating: true
     duplication: true
 build:
+  nodes:
     php7.2:
       environment:
           php: '7.2'
-      nodes:
-          analysis:
-              project_setup:
-                  override: true
-              tests:
-                  override: [php-scrutinizer-run]
+      analysis:
+          project_setup:
+              override: true
+          tests:
+              override: [php-scrutinizer-run]
     php7.3:
       environment:
         php: '7.3'
-      nodes:
-        analysis:
-          project_setup:
-            override: true
-          tests:
-            override: [php-scrutinizer-run]
+      analysis:
+        project_setup:
+          override: true
+        tests:
+          override: [php-scrutinizer-run]
 
 filter:
   paths: [src/*]
