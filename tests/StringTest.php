@@ -12,6 +12,7 @@
 
 namespace Sauls\Component\Helper;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Sauls\Component\Helper\Operation\Factory\OperationFactory;
 use Sauls\Component\Helper\Operation\StringOperation;
@@ -270,11 +271,12 @@ class StringTest extends TestCase
 
     /**
      * @test
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage `notvalid` truncate operation method is not supported.
      */
     public function should_trow_exception_if_wrong_truncate_method_given(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('`notvalid` truncate operation method is not supported.');
+
         $truncateOperation = OperationFactory::create(StringOperation\TruncateHtml::class);
         $truncateOperation->setTruncateOperationMethod('notvalid');
 

@@ -13,8 +13,10 @@
 namespace Sauls\Component\Helper;
 
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use Sauls\Component\Helper\Stubs\DummyObject;
 use Sauls\Component\Helper\Stubs\StringObject;
+use TypeError;
 
 class ArrayTest extends TestCase
 {
@@ -496,10 +498,10 @@ class ArrayTest extends TestCase
 
     /**
      * @test
-     * @expectedException \TypeError
      */
     public function should_throw_error_when_not_array_passed_to_array_key_exists(): void
     {
+        $this->expectException(TypeError::class);
         array_key_exists('I am a string.', 'value');
     }
 
@@ -664,10 +666,10 @@ class ArrayTest extends TestCase
 
     /**
      * @test
-     * @expectedException \RuntimeException
      */
     public function should_throw_exception_when_object_cannot_be_converted_to_string(): void
     {
+        $this->expectException(RuntimeException::class);
         array_flatten([
             'a' => 11,
             'b' => new DummyObject(),

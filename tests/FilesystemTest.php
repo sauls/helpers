@@ -17,33 +17,36 @@ use PHPUnit\Framework\TestCase;
 class FilesystemTest extends TestCase
 {
     /**
-     * SetUp
+     * @test
      */
-    protected function setUp()
+    public function should_remove_directories(): void
+    {
+        $directory = $this->getTestDirectory();
+
+        $this->assertTrue(rrmdir($directory . '/test2'));
+        $this->assertFileExists($directory . '/test1');
+        $this->assertFileNotExists($directory . '/test2/testfile1');
+        $this->assertFileNotExists($directory . '/test2/testfile2');
+        $this->assertFileNotExists($directory . '/test2');
+        $this->assertFileExists($directory . '/test3/testfile1');
+        $this->assertFalse(rrmdir($directory . '/test3/testfile1'));
+        $this->assertTrue(rrmdir($directory));
+        $this->assertFileNotExists($directory);
+    }
+
+    protected function setUp(): void
     {
         $directory = $this->getTestDirectory();
 
         if (!file_exists($directory)) {
             mkdir($directory);
 
-            mkdir($directory.'/test1');
-            mkdir($directory.'/test2');
-            touch($directory.'/test2/testfile1');
-            touch($directory.'/test2/testfile2');
-            mkdir($directory.'/test3');
-            touch($directory.'/test3/testfile1');
-        }
-    }
-
-    /**
-     * TearDown
-     */
-    protected function tearDown()
-    {
-        $directory = $this->getTestDirectory();
-
-        if (file_exists($directory)) {
-            rrmdir($directory);
+            mkdir($directory . '/test1');
+            mkdir($directory . '/test2');
+            touch($directory . '/test2/testfile1');
+            touch($directory . '/test2/testfile2');
+            mkdir($directory . '/test3');
+            touch($directory . '/test3/testfile1');
         }
     }
 
@@ -51,22 +54,13 @@ class FilesystemTest extends TestCase
     {
         return __DIR__ . '/tmp';
     }
-
-    /**
-     * @test
-     */
-    public function should_remove_directories(): void
+    
+    protected function tearDown(): void
     {
         $directory = $this->getTestDirectory();
-        
-        $this->assertTrue(rrmdir($directory.'/test2'));
-        $this->assertFileExists($directory.'/test1');
-        $this->assertFileNotExists($directory.'/test2/testfile1');
-        $this->assertFileNotExists($directory.'/test2/testfile2');
-        $this->assertFileNotExists($directory.'/test2');
-        $this->assertFileExists($directory.'/test3/testfile1');
-        $this->assertFalse(rrmdir($directory.'/test3/testfile1'));
-        $this->assertTrue(rrmdir($directory));
-        $this->assertFileNotExists($directory);
+
+        if (file_exists($directory)) {
+            rrmdir($directory);
+        }
     }
 }
