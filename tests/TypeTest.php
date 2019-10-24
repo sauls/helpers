@@ -38,7 +38,7 @@ class TypeTest extends TestCase
             [
             'a' => 1,
             'b' => 2,
-            ],~
+            ],
             convert_to(new TraversableObject, 'array')
         );
         $this->assertSame(
