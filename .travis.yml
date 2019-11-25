@@ -1,16 +1,18 @@
 language: php
 
-php:
-  - 7.2
-
 env:
   global:
     - COMPOSER_PREFER_LOWEST=false
 
 matrix:
-  fast_finish: true
   include:
     - php: 7.2
+      env: deps=low
+    - php: 7.3
+      env: deps=low
+    - php: 7.4snapshot
+      env: deps=low
+  fast_finish: true
 
 sudo: false
 

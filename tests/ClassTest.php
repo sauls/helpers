@@ -44,4 +44,27 @@ class ClassTest extends TestCase
         $this->assertTrue(class_uses_trait(DummyTwoTraitObject::class, UselessTrait::class));
         $this->assertTrue(class_uses_trait(DummyTwoTraitObject::class, OneVariableTrait::class));
     }
+
+    /**
+     * @test
+     * @dataProvider getClassFqcnData
+     */
+    public function should_return_class_ucnp(string $expected, string $class): void
+    {
+        $this->assertEquals($expected, class_ucnp($class));
+    }
+
+    public function getClassFqcnData(): array
+    {
+        return[
+            ['name', 'My\\Super\\Class\\Name'],
+            ['dummy_object', DummyObject::class],
+            ['my_class', 'MyClass'],
+            ['test', '\Test'],
+            ['test', '\test'],
+            ['test', 'Vendor\Path\Test'],
+            ['test', '\Vendor\Test'],
+            ['test_type', '\Vendor\Library\TestType']
+        ];
+    }
 }

@@ -29,11 +29,11 @@ class TypeTest extends TestCase
      */
     public function should_convert_array_type(): void
     {
-        $this->assertInternalType('array', convert_to([], 'array'));
-        $this->assertInternalType('array', convert_to([], '[]'));
-        $this->assertInternalType('array', convert_to([1, 2, 4], 'array'));
-        $this->assertInternalType('array', convert_to('string value', 'array'));
-        $this->assertInternalType('array', convert_to(123, 'array'));
+        $this->assertIsArray(convert_to([], 'array'));
+        $this->assertIsArray(convert_to([], '[]'));
+        $this->assertIsArray(convert_to([1, 2, 4], 'array'));
+        $this->assertIsArray(convert_to('string value', 'array'));
+        $this->assertIsArray(convert_to(123, 'array'));
         $this->assertSame(
             [
             'a' => 1,

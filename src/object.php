@@ -14,6 +14,7 @@ namespace Sauls\Component\Helper;
 
 use Sauls\Component\Helper\Exception\ClassPropertyNotSetException;
 use Sauls\Component\Helper\Exception\PropertyNotAccessibleException;
+use Sauls\Component\Helper\Operation\Factory\OperationFactory;
 use Sauls\Component\Helper\Operation\ObjectOperation;
 
 /**
@@ -38,4 +39,14 @@ function get_object_property_value(object $object, string $property, array $meth
 function set_object_property_value(object $object, string $property, $value): void
 {
     (new ObjectOperation\SetPropertyValue)->execute($object, $property, $value);
+}
+
+function object_ucnp(object $value): string
+{
+    return OperationFactory::create(ObjectOperation\Ucnp::class)->execute($value);
+}
+
+function object_to_array($object, array $properties = [], bool $recursive = true): array
+{
+    return OperationFactory::create(ObjectOperation\ToArray::class)->execute($object, $properties, $recursive);
 }

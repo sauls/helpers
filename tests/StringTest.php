@@ -12,6 +12,7 @@
 
 namespace Sauls\Component\Helper;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Sauls\Component\Helper\Operation\Factory\OperationFactory;
 use Sauls\Component\Helper\Operation\StringOperation;
@@ -270,11 +271,12 @@ class StringTest extends TestCase
 
     /**
      * @test
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage `notvalid` truncate operation method is not supported.
      */
     public function should_trow_exception_if_wrong_truncate_method_given(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('`notvalid` truncate operation method is not supported.');
+
         $truncateOperation = OperationFactory::create(StringOperation\TruncateHtml::class);
         $truncateOperation->setTruncateOperationMethod('notvalid');
 
@@ -284,11 +286,31 @@ class StringTest extends TestCase
     /**
      * @test
      */
-    public function should_contain_given_string(): void
+    public function should_string_be_in_given_string(): void
     {
         $stringInOperation = OperationFactory::create(StringOperation\StringIn::class);
 
+        $this->assertTrue($stringInOperation->execute('test', ['test_']));
         $this->assertTrue(string_in('test', ['test_']));
+    }
+
+    /**
+     * @test
+     */
+    public function should_not_string_be_in_given_string(): void
+    {
+        $this->assertFalse(string_in('test_', ['test']));
+    }
+
+    /**
+     * @test
+     */
+    public function should_string_contain_given_strings(): void
+    {
+        $stringContainsOperation = OperationFactory::create(StringOperation\StringContains::class);
+        $this->assertTrue($stringContainsOperation->execute('long string to check', ['string', 'int']));
+        $this->assertTrue(string_contains('long string to check', ['string', 'int']));
+        $this->assertTrue(string_contains('http://localhost/long/route', ['medium', 'long', 'short']));
     }
 
     /**
@@ -296,6 +318,6 @@ class StringTest extends TestCase
      */
     public function should_not_contain_given_string(): void
     {
-        $this->assertFalse(string_in('test_', ['test']));
+        $this->assertFalse(string_contains('http://localhost/long/route', ['medium', 'short']));
     }
 }

@@ -47,7 +47,7 @@ class DateTimeTest extends TestCase
      */
     public function should_print_elapsed_time_short_strings($dateTime, string $expected, array $labels = []): void
     {
-        $this->assertContains($expected, elapsed_time($dateTime, $labels, ELAPSED_TIME_FORMAT_SHORT));
+        $this->assertStringContainsString($expected, elapsed_time($dateTime, $labels, ELAPSED_TIME_FORMAT_SHORT));
     }
 
     /**
@@ -77,7 +77,7 @@ class DateTimeTest extends TestCase
      */
     public function should_print_elapsed_time_long_strings($dateTime, string $expected, array $labels = []): void
     {
-        $this->assertContains($expected, elapsed_time($dateTime, $labels));
+        $this->assertStringContainsString($expected, elapsed_time($dateTime, $labels));
     }
 
     /**

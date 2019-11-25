@@ -10,15 +10,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Sauls\Component\Helper\Operation\ObjectOperation;
+namespace Sauls\Component\Helper\Operation\StringOperation;
 
-use Sauls\Component\Helper\Exception\ClassPropertyNotSetException;
 use Sauls\Component\Helper\Operation\Operation;
 
-interface SetPropertyInterface extends Operation
+interface StringContainsInterface extends Operation
 {
-    /**
-     * @throws ClassPropertyNotSetException
-     */
-    public function execute(object $object, string $property, $value): void;
+    public function execute(string $value, array $values): bool;
 }
