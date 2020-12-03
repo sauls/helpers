@@ -16,5 +16,5 @@ use Sauls\Component\Helper\Operation\Operation;
 
 interface ExplodeWithMultiDelimitersInterface extends Operation
 {
-    public function execute(array $delimiters = [], string $value): array;
+    public function execute(string $value, array $delimiters = []): array;
 }

@@ -14,7 +14,7 @@ namespace Sauls\Component\Helper\Operation\DateTimeOperation;
 
 class Countdown extends AbstractOperation implements CountdownInterface
 {
-    public function execute($dateFrom = 'now', $dateTo, string $format = '%s%02d:%02d:%02d'): string
+    public function execute($dateFrom = 'now', $dateTo = null, string $format = '%s%02d:%02d:%02d'): string
     {
         $dateFrom = $this->createDateObject($dateFrom);
         $dateTo = $this->createDateObject($dateTo);

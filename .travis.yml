@@ -6,11 +6,9 @@ env:
 
 matrix:
   include:
-    - php: 7.2
+    - php: 7.4
       env: deps=low
-    - php: 7.3
-      env: deps=low
-    - php: 7.4snapshot
+    - php: 8.0
       env: deps=low
   fast_finish: true
 

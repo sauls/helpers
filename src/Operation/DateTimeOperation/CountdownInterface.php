@@ -18,5 +18,5 @@ interface CountdownInterface extends Operation
 {
     public const DAY_IN_HOURS = 24;
 
-    public function execute($dateFrom = 'now', $dateTo, string $format = '%s%02d:%02d:%02d'): string;
+    public function execute($dateFrom = 'now', $dateTo = null, string $format = '%s%02d:%02d:%02d'): string;
 }

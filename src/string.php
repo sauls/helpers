@@ -34,9 +34,9 @@ function string_snakeify(string $value): string
 /**
  * @throws \Exception
  */
-function explode_using_multi_delimiters(array $delimiters = ['.'], string $value): array
+function explode_using_multi_delimiters(string $value, array $delimiters = ['.']): array
 {
-    return OperationFactory::create(StringOperation\ExplodeWithMultiDelimiters::class)->execute($delimiters, $value);
+    return OperationFactory::create(StringOperation\ExplodeWithMultiDelimiters::class)->execute($value, $delimiters);
 }
 
 /**

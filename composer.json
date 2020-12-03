@@ -10,7 +10,7 @@
     }
   ],
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.4",
     "defuse/php-encryption": "^2.2",
     "ezyang/htmlpurifier": "^4.11",
     "symfony/dependency-injection": "^4.0 || ^5.0",

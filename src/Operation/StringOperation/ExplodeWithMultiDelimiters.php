@@ -14,7 +14,7 @@ namespace Sauls\Component\Helper\Operation\StringOperation;
 
 class ExplodeWithMultiDelimiters implements ExplodeWithMultiDelimitersInterface
 {
-    public function execute(array $delimiters = [], string $value): array
+    public function execute(string $value, array $delimiters = []): array
     {
         return \explode($delimiters[0], \str_replace($delimiters, $delimiters[0], $value));
     }
