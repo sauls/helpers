@@ -1,18 +1,20 @@
 language: php
 
+os: linux
+
+dist: xenial
+
 env:
   global:
     - COMPOSER_PREFER_LOWEST=false
 
-matrix:
+jobs:
   include:
     - php: 7.4
       env: deps=low
     - php: 8.0
       env: deps=low
   fast_finish: true
-
-sudo: false
 
 cache:
   directories:
