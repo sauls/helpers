@@ -11,13 +11,6 @@ build:
         override: true
       tests:
         override: [php-scrutinizer-run]
-    php8.0:
-      environment:
-        php: '8.0'
-      project_setup:
-        override: true
-      tests:
-        override: [php-scrutinizer-run]
 
 filter:
   paths: [src/*]
