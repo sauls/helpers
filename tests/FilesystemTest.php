@@ -25,13 +25,13 @@ class FilesystemTest extends TestCase
 
         $this->assertTrue(rrmdir($directory . '/test2'));
         $this->assertFileExists($directory . '/test1');
-        $this->assertFileNotExists($directory . '/test2/testfile1');
-        $this->assertFileNotExists($directory . '/test2/testfile2');
-        $this->assertFileNotExists($directory . '/test2');
+        $this->assertFileDoesNotExist($directory . '/test2/testfile1');
+        $this->assertFileDoesNotExist($directory . '/test2/testfile2');
+        $this->assertFileDoesNotExist($directory . '/test2');
         $this->assertFileExists($directory . '/test3/testfile1');
         $this->assertFalse(rrmdir($directory . '/test3/testfile1'));
         $this->assertTrue(rrmdir($directory));
-        $this->assertFileNotExists($directory);
+        $this->assertFileDoesNotExist($directory);
     }
 
     protected function setUp(): void

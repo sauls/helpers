@@ -12,6 +12,7 @@
 
 namespace Sauls\Component\Helper\Operation\DateTimeOperation;
 
+use Carbon\Carbon;
 use Sauls\Component\Helper\Operation\ArrayOperation;
 
 class ElapsedTime extends AbstractOperation implements ElapsedTimeInterface
@@ -76,18 +77,21 @@ class ElapsedTime extends AbstractOperation implements ElapsedTimeInterface
         $date = $this->createDateObject($date);
 
         $time = $date->getTimestamp();
-        $timeDifference = time() - $time;
+        $timeDifference = Carbon::now()->getTimestamp() - $time;
         $timeLeftValues = [];
 
         foreach ($this->timeOffsets as [$timeSingle, $timePlural, $offset]) {
             if ($timeDifference >= $offset) {
-
-                $timeLeft = floor($timeDifference / $offset);
-                $timeDifference -= ($timeLeft * $offset);
-                $timeLeftValues[] = $this->formatLabel((int)$timeLeft, $elapsedTimeLabels, [
-                    'singular' => $timeSingle,
-                    'plural' => $timePlural,
-                ]);
+                $timeLeft = floor((float)$timeDifference / (float)$offset);
+                $timeDifference -= ((float)$timeLeft * (float)$offset);
+                $timeLeftValues[] = $this->formatLabel(
+                    (int)$timeLeft,
+                    $elapsedTimeLabels,
+                    [
+                        'singular' => $timeSingle,
+                        'plural' => $timePlural,
+                    ]
+                );
             }
         }
 

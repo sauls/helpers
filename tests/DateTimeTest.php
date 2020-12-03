@@ -12,6 +12,8 @@
 
 namespace Sauls\Component\Helper;
 
+use Carbon\Carbon;
+use DateTime;
 use PHPUnit\Framework\TestCase;
 
 class DateTimeTest extends TestCase
@@ -47,7 +49,13 @@ class DateTimeTest extends TestCase
      */
     public function should_print_elapsed_time_short_strings($dateTime, string $expected, array $labels = []): void
     {
-        $this->assertStringContainsString($expected, elapsed_time($dateTime, $labels, ELAPSED_TIME_FORMAT_SHORT));
+        Carbon::withTestNow(
+            new DateTime('2010-06-15 15:00:00'),
+            fn() => $this->assertStringContainsString(
+                $expected,
+                elapsed_time($dateTime, $labels, ELAPSED_TIME_FORMAT_SHORT)
+            )
+        );
     }
 
     /**
@@ -55,7 +63,7 @@ class DateTimeTest extends TestCase
      */
     public function getPrintElapsedTimeShortStringsData(): array
     {
-        $now = new \DateTime();
+        $now = new DateTime('2010-06-15 15:00:00');
 
         return [
             [(clone $now)->modify('-3 month -1 day')->format('Y-m-d H:i:s'), '3mo'],
@@ -77,7 +85,10 @@ class DateTimeTest extends TestCase
      */
     public function should_print_elapsed_time_long_strings($dateTime, string $expected, array $labels = []): void
     {
-        $this->assertStringContainsString($expected, elapsed_time($dateTime, $labels));
+        Carbon::withTestNow(
+            new DateTime('2011-05-04 16:45:09'),
+            fn() => $this->assertStringContainsString($expected, elapsed_time($dateTime, $labels))
+        );
     }
 
     /**
@@ -85,7 +96,7 @@ class DateTimeTest extends TestCase
      */
     public function getPrintElapsedTimeLongStringsData(): array
     {
-        $now = new \DateTime();
+        $now = new DateTime('2011-05-04 16:45:09');
 
         return [
             [(clone $now)->modify('-3 month -1 day')->format('Y-m-d H:i:s'), '3mo'],

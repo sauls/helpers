@@ -62,12 +62,12 @@ class StringTest extends TestCase
      */
     public function should_explode_string_by_multiple_delimiters(): void
     {
-        $this->assertSame(['one', 'two', 'three'], explode_using_multi_delimiters(['.'], 'one.two.three'));
-        $this->assertSame(['one', 'two', 'three'], explode_using_multi_delimiters(['.', ','], 'one.two,three'));
+        $this->assertSame(['one', 'two', 'three'], explode_using_multi_delimiters('one.two.three', ['.']));
+        $this->assertSame(['one', 'two', 'three'], explode_using_multi_delimiters('one.two,three', ['.', ',']));
         $this->assertSame(['one', 'two', 'three', 'four'],
-            explode_using_multi_delimiters(['.', ',', '#'], 'one.two,three#four'));
+            explode_using_multi_delimiters('one.two,three#four', ['.', ',', '#']));
         $this->assertSame(['one', 'two', 'three', 'four|five'],
-            explode_using_multi_delimiters(['.', ',', '#'], 'one.two,three#four|five'));
+            explode_using_multi_delimiters('one.two,three#four|five', ['.', ',', '#']));
     }
 
     /**
