@@ -4,16 +4,16 @@ checks:
     duplication: true
 build:
   nodes:
-    php7.2:
+    php7.4:
       environment:
-        php: '7.2'
+        php: '7.4'
       project_setup:
         override: true
       tests:
         override: [php-scrutinizer-run]
-    php7.3:
+    php8.0:
       environment:
-        php: '7.3'
+        php: '8.0'
       project_setup:
         override: true
       tests:
