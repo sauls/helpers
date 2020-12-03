@@ -11,7 +11,7 @@ Various helper functions to help you in everyday software development.
 
 ## Requirements
 
-PHP >= 7.2
+PHP >= 7.4
 
 ## Installation
 
